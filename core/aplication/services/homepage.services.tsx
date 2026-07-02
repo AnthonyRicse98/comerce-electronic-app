@@ -5,9 +5,9 @@ export const HomePageServices = {
     const supabase = await createClient();
 
     const { data, error } = await supabase
-      .from("HOMEPAGE")
+      .from("homepage")
       .select("name, collection")
-      .eq("name", "Navigation")
+      .eq("name", "navigation")
       .single();
 
     if (error) throw new Error(error.message);
