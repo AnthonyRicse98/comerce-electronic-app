@@ -26,11 +26,13 @@ const RecoverPasswordForm = ({ setTypeSelected }: AuthFormProps) => {
     const [isLoading, setisLoading] = useState<boolean>(false)
 
     // ============ Form ============
+    // Busca el formSchema y déjalo así:
     const formSchema = z.object({
-        email: z.email('Por favor ingresa un correo válido. Ejemplo: user@mail.com').min(1, {
-            message: 'Este campo es requerido'
-        }),
-    })
+        email: z
+            .string()
+            .min(1, { message: 'Este campo es requerido' })
+            .email({ message: 'Por favor ingresa un correo válido. Ejemplo: user@mail.com' }),
+    });
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -48,9 +50,9 @@ const RecoverPasswordForm = ({ setTypeSelected }: AuthFormProps) => {
         setisLoading(true);
 
         try {
-      
+
             console.log(user);
-            
+
 
         } catch (error: any) {
             toast.error(error.message, { duration: 2500 });

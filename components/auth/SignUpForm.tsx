@@ -34,9 +34,11 @@ const SignUpForm = ({ setTypeSelected }: AuthFormProps) => {
             .max(20, 'El nombre no puede tener más de 20 caracteres')
             .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, 'El nombre solo puede contener letras'),
 
-        email: z.email('Por favor ingresa un correo válido. Ejemplo: user@mail.com').min(1, {
-            message: 'Este campo es requerido'
-        }),
+        // Modifica las líneas 37-39 para que queden exactamente así:
+        email: z
+            .string()
+            .min(1, { message: 'Este campo es requerido' })
+            .email({ message: 'Por favor ingresa un correo válido. Ejemplo: user@mail.com' }),
         password: z.string().min(6, {
             message: 'La contraseña debe tener al menos 6 caracteres'
         })

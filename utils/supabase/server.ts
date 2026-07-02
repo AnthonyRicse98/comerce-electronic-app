@@ -12,10 +12,15 @@ export async function createClient() {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          );
+        // Añadimos el tipo explícito para solucionar el error de TypeScript
+        setAll(cookiesToSet: { name: string; value: string; options: any }[]) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options)
+            );
+          } catch (error) {
+            // Se puede ignorar en Server Components
+          }
         },
       },
     }

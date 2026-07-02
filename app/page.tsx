@@ -1,4 +1,4 @@
-import AuthForm from "@/components/auth/auth/AuthForm";
+import AuthForm from "@/components/auth/AuthForm";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function Home() {
