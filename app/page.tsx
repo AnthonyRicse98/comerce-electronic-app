@@ -12,7 +12,18 @@ export default async function Home() {
 console.log(data?.collection);
   return (
     <div className="pt-12">
-      <AuthForm type="sign-in" />
+      <pre>
+        {
+          JSON.stringify(
+            {
+              data: data,
+              error: error
+            },
+            null,
+            2
+          )
+        }
+      </pre>
     </div>
   );
 }
