@@ -12,18 +12,16 @@ export default async function Home() {
 console.log(data?.collection);
   return (
     <div className="pt-12">
-      <pre>
-        {
-          JSON.stringify(
-            {
-              data: data,
-              error: error
-            },
-            null,
-            2
-          )
-        }
-      </pre>
+      <h1>hola mundo</h1>
+      <p>services</p>
+      {
+        data?.collection.services.map((item: any, index: number) => (
+          <div key={index}>
+            <h2>{item.name}</h2>
+            <p>{item.description}</p>
+          </div>
+        ))
+      }
     </div>
   );
 }
