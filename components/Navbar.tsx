@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-
+import Link from "next/link";
 // Types
 interface NavItem {
   label: string;
@@ -34,18 +34,21 @@ interface MobileMenuProps {
   services: servicesProps[];
 }
 
-const Navigation = ({ services }: { services: servicesProps[] }) => {
-
+const Navigation = ({ services, isScrolled }: { services: servicesProps[], isScrolled: boolean }) => {
   return (
-    <nav className="hidden lg:flex gap-x-8 gap-y-8 items-center justify-between">
+    <nav className="hidden lg:flex gap-x-8 items-center justify-between">
       {services.map((item) => (
-        <a
+        <Link
           key={item.id}
-          className="hover:text-white transition text-sm text-neutral-300"
+          // Lógica: Si isScrolled es true, texto blanco. Si no, negro.
+          // El hover siempre es celeste (sky-500).
+          className={`transition text-sm font-medium hover:text-sky-500 ${
+            isScrolled ? 'text-white' : 'text-neutral-950'
+          }`}
           href={item.route}
         >
           {item.name}
-        </a>
+        </Link>
       ))}
     </nav>
   );
@@ -59,40 +62,39 @@ const MobileMenu = ({ isOpen, onClose, services }: MobileMenuProps) => {
   return (
     <div
       id="mobile-menu"
-      className={`lg:hidden absolute top-16 left-0 right-0 bg-neutral-950/95 backdrop-blur-xl border-b border-white/10 shadow-2xl ${
-        isOpen ? 'block' : 'hidden'
-      }`}
+      className={`lg:hidden absolute top-16 left-0 right-0 bg-neutral-950/95 backdrop-blur-xl border-b border-white/10 shadow-2xl ${isOpen ? 'block' : 'hidden'
+        }`}
       style={{ animation: 'slideDown 0.3s ease-out' }}
     >
       <nav className="flex flex-col px-4 py-6 space-y-4">
         {services.map((item) => (
-          <a
+          <Link
             key={item.id}
             className="text-base text-neutral-300 hover:text-white transition py-2 px-3 rounded-lg hover:bg-white/5"
             href={item.route}
             onClick={onClose}
           >
             {item.name}
-          </a>
+          </Link>
         ))}
         <div className="pt-4 border-t border-white/10 flex flex-col gap-3">
-          <button className="inline-flex transition overflow-hidden group text-sm font-medium rounded-full pt-2 pr-4 pb-2 pl-4 gap-x-2 gap-y-2 items-center justify-center border border-white/20 hover:border-white/40">
+          <button className="inline-flex transition overflow-hidden group text-sm font-medium rounded-full py-2 px-4 gap-x-2 items-center justify-center border border-black bg-black text-white hover:bg-neutral-800">
+            <span>Get started</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
               height="18"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="currentColor"
+              stroke="white"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="lucide lucide-arrow-right"
+              className="transition-all duration-400 group-hover:translate-x-1"
             >
               <path d="M5 12h14"></path>
               <path d="m12 5 7 7-7 7"></path>
             </svg>
-            <span className="text-white">Get started</span>
           </button>
         </div>
       </nav>
@@ -113,9 +115,17 @@ const MobileMenu = ({ isOpen, onClose, services }: MobileMenuProps) => {
   );
 };
 
-export const Navbar = ({ className = '', aemNavigation }: NavbarProps ) => {
- const [isScrolled, setIsScrolled] = useState(false);
+export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -126,21 +136,15 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps ) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
-
   return (
     <header
-      className={`sticky z-20 supports-backdrop-filter:bg-neutral-950/60 max-w-full border-white/5 top-0 backdrop-blur justify-between transition-all duration-300 ${
-        isScrolled ? 'border-b' : 'border-transparent'
-      } ${className}`}
-    >
-      <div className="flex sm:px-6 lg:pl-46 lg:pr-46 w-full h-16 border-neutral-50/10 border ring-0 pr-4 pl-4 space-x-6 items-center justify-between">
+  className={`sticky z-20 top-0 w-full transition-all duration-300 border-b flex items-center justify-between ${
+    isScrolled 
+      ? 'bg-neutral-950/60 backdrop-blur-md border-white/10' // Efecto "vidrio" al bajar
+      : 'bg-white border-transparent'                        // Blanco sólido al inicio
+  } ${className}`}
+>
+      <div className="flex sm:px-6 lg:pl-46 lg:pr-52 w-full h-16 border-neutral-50/10 border ring-0 pr-4 pl-4 space-x-6 items-center justify-between">
         {/* Mobile Menu Toggle Button */}
         <button
           id="mobile-menu-toggle"
@@ -157,14 +161,14 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps ) => {
               height="24"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="currentColor"
+              stroke="black"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="lucide lucide-x"
+              className="lucide lucide-x bg-"
             >
-              <path d="M18 6 6 18"></path>
-              <path d="m6 6 12 12"></path>
+              <path className='bg-black' d="M18 6 6 18"></path>
+              <path className='bg-black' d="m6 6 12 12"></path>
             </svg>
           ) : (
             <svg
@@ -173,7 +177,7 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps ) => {
               height="24"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="currentColor"
+              stroke="black"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -187,63 +191,62 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps ) => {
         </button>
 
         {/* Logo */}
-        <a
+        <Link
           href="/"
           className="inline-flex items-center justify-center bg-center w-[100px] h-10 bg-[url(https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/bcb70761-6a38-4c33-b473-8ad0ac012039_1600w.png)] bg-cover rounded lg:mx-0 mx-auto"
           aria-label={aemNavigation?.logo?.name}
         >
           {aemNavigation?.logo?.name}
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
-        <Navigation services={aemNavigation?.services || []} />
+        <Navigation services={aemNavigation?.services || []} isScrolled={isScrolled} />
 
         {/* CTA Button - Desktop */}
-        <div className="hidden lg:flex items-center gap-3">
-          <button className="inline-flex transition overflow-hidden group text-sm font-medium rounded-full pt-2 pr-4 pb-2 pl-4 relative gap-x-2 gap-y-2 items-center border border-white/20 hover:border-white/40">
-           
-            <span
-              className="text-gradient relative z-10 bg-linear-to-r from-white via-pink-200 to-white bg-size-[200%_100%] bg-clip-text text-transparent transition-all duration-600 group-hover:bg-right"
-            >
-              Get started
-            </span>
-             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-arrow-right arrow-icon relative z-10 transition-all duration-400 group-hover:translate-x-1"
-            >
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </button>
+        <div className="hidden lg:flex items-center gap-3 ">
+          <div className=" flex flex-col gap-3">
+            <button className="inline-flex transition overflow-hidden group text-sm font-medium rounded-full py-2 px-4 gap-x-2 items-center justify-center border border-black bg-black text-white hover:bg-neutral-800">
+              <span>Cotiza</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="transition-all duration-400 group-hover:translate-x-1"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* CTA Button - Mobile */}
         <div className="lg:hidden flex items-center gap-3">
-          <button className="inline-flex transition overflow-hidden group text-sm font-medium rounded-full pt-2 pr-4 pb-2 pl-4 relative gap-x-2 gap-y-2 items-center border border-white/20 hover:border-white/40">
+          <button className="inline-flex transition overflow-hidden group text-sm font-medium rounded-full py-2 px-4 items-center border border-black bg-black text-white hover:bg-neutral-800 hover:border-neutral-800">
+            <span className="relative z-10 transition-all duration-300">
+              Get started
+            </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
               height="18"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="currentColor"
+              stroke="white"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="lucide lucide-arrow-right arrow-icon relative z-10 transition-all duration-400 group-hover:translate-x-1"
+              className="ml-2 transition-all duration-400 group-hover:translate-x-1"
             >
               <path d="M5 12h14"></path>
               <path d="m12 5 7 7-7 7"></path>
             </svg>
-            <span className="text-white text-sm">Get started</span>
           </button>
         </div>
       </div>

@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { ElectronicRepository } from '@/core/aplication/repository/electronic.repository';
+import { Navbar } from '@/components/Navbar';
+
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -9,13 +12,14 @@ export const metadata: Metadata = {
   description: 'AIDashboard helps product and revenue teams turn data into action with AI-powered analytics.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+     const aemNavigation = await ElectronicRepository.getNavigation();
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -25,6 +29,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} antialiased text-neutral-100 bg-neutral-950`}>
+        <Navbar aemNavigation={aemNavigation.collection} />
         {children}
       </body>
     </html>

@@ -254,7 +254,7 @@ const CTAButtons = () => {
 
 const ProductPreview = () => {
   return (
-    <div className="px-2 lg:px-8 sm:mt-16 max-w-6xl mt-12 mr-auto ml-auto">
+    <div className="px-2 pt-[60px] lg:pt-[470px] md:pt-[400px] lg:px-8 sm:mt-16 max-w-6xl mt-12 mr-auto ml-auto">
       <div 
         className="rounded-2xl shadow-2xl backdrop-blur bg-neutral-900/60 in-view"
         style={{
@@ -264,9 +264,7 @@ const ProductPreview = () => {
         } as React.CSSProperties}
         data-scroll-animate="blur-up"
       >
-        {/* Content placeholder - Se implementará completamente después */}
         <div className="lg:px-6 pb-6 pt-1 text-center text-neutral-400">
-          {/* DashboardPreview component would go here */}
           <DashboardPreview/>
         </div>
       </div>
@@ -274,31 +272,35 @@ const ProductPreview = () => {
   );
 };
 
-export const Hero = () => {
+export const Hero = ({ multimedia }: { multimedia: any }) => {
+  console.log(multimedia);
   return (
     <section className="pb-12 relative" id="home">
       {/* Background Elements */}
-      <div className="aura-background-component top-0 w-full h-screen -z-10 absolute opacity-30"
-        style={{ 
-          maskImage: 'linear-gradient(to bottom, transparent, black 0%, black 0%, transparent)',
-          WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 0%, black 0%, transparent)'
-        }}>
-        <div id="particles-js" className="absolute inset-0 -z-10"></div>
-      </div>
-      
       <div 
-        className="bg-center opacity-70 w-full h-screen bg-cover absolute top-0 blur-sm"
-        style={{ 
-          backgroundImage: 'url(bg-liquid.webp)',
-          maskImage: 'linear-gradient(180deg, transparent, black 0%, black 80%, transparent)',
-          WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 80%, transparent)'
-        }}
-        data-alpha-mask="80"
-      />
+    // Ajustado: h-64 para móvil, md:h-screen para escritorio
+    className="aura-background-component top-0 w-full h-64 md:h-screen -z-10 absolute opacity-30"
+    style={{ 
+      maskImage: 'linear-gradient(to bottom, black 0%, black 0%)',
+      WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 0%, black 0%, transparent)'
+    }}
+  >
+    <div id="particles-js" className="absolute inset-0 -z-10"></div>
+  </div>
+  
+  <div 
+    // Ajustado: h-64 para móvil, md:h-screen para escritorio
+    className="bg-center opacity-120 w-full h-64 md:h-screen bg-cover absolute top-0"
+    style={{ 
+      backgroundImage: `url(${multimedia?.url})`,
+      maskImage: 'linear-gradient(180deg, transparent, black 0%, black 80%, transparent)',
+      WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 80%, transparent)'
+    }}
+    data-alpha-mask="80"
+  />
 
       {/* Main Content */}
       <div className="sm:px-6 lg:px-8 sm:pt-24 max-w-3xl mr-auto ml-auto pt-16 pr-4 pl-4 in-view" data-scroll-animate-children="">
-        <HeroStats />
         
         <h1 
           className="sm:text-6xl md:text-7xl text-4xl font-semibold tracking-tight text-center mt-2 mb-2 in-view"
@@ -309,7 +311,6 @@ export const Hero = () => {
           }}
           data-scroll-animate="blur-up"
         >
-          AI‑driven analytics that 4× your growth
         </h1>
         
         <p 
@@ -321,12 +322,9 @@ export const Hero = () => {
           }}
           data-scroll-animate="fade-up"
         >
-          Turn scattered data into clear decisions. AIDashboard reveals patterns,
-          forecasts outcomes, and helps you ship what actually moves the
-          metrics.
         </p>
 
-        <CTAButtons />
+        {/* <CTAButtons /> */}
       </div>
 
       <ProductPreview />
