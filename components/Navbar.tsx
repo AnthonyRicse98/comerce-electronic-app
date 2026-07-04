@@ -79,7 +79,7 @@ const MobileMenu = ({ isOpen, onClose, services }: MobileMenuProps) => {
         ))}
         <div className="pt-4 border-t border-white/10 flex flex-col gap-3">
           <button className="inline-flex transition overflow-hidden group text-sm font-medium rounded-full py-2 px-4 gap-x-2 items-center justify-center border border-black bg-black text-white hover:bg-neutral-800">
-            <span>Get started</span>
+            <span>Cotizar</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -206,7 +206,7 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
         <div className="hidden lg:flex items-center gap-3 ">
           <div className=" flex flex-col gap-3">
             <button className="inline-flex transition overflow-hidden group text-sm font-medium rounded-full py-2 px-4 gap-x-2 items-center justify-center border border-black bg-black text-white hover:bg-neutral-800">
-              <span>Cotiza</span>
+              <span>Cotizar</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -230,7 +230,7 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
         <div className="lg:hidden flex items-center gap-3">
           <button className="inline-flex transition overflow-hidden group text-sm font-medium rounded-full py-2 px-4 items-center border border-black bg-black text-white hover:bg-neutral-800 hover:border-neutral-800">
             <span className="relative z-10 transition-all duration-300">
-              Get started
+              Cotizar
             </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"

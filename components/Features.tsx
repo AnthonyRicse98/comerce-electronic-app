@@ -238,7 +238,7 @@ const FeatureCard = ({ feature, index }: FeatureCardProps) => {
                     <path d="m12 5 7 7-7 7"></path>
                   </svg>
                 </span>
-                Get Started
+                Cotizar
               </button>
             </div>
           </div>
