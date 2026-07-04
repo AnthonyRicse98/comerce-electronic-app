@@ -191,13 +191,17 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
         </button>
 
         {/* Logo */}
-        <Link
-          href="/"
-          className="inline-flex items-center justify-center bg-center w-[45px] h-10 bg-[url(https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/bcb70761-6a38-4c33-b473-8ad0ac012039_1600w.png)] bg-cover rounded lg:mx-0 mx-auto"
-          aria-label={aemNavigation?.logo?.name}
-        >
-          <img  src="logo.svg" alt="" />
-        </Link>
+<Link
+  href="/"
+  className="inline-flex items-center justify-center w-[120px] h-10 min-w-[120px] shrink-0"
+  aria-label={aemNavigation?.logo?.name}
+>
+  <img 
+    src="logo.svg" 
+    alt={aemNavigation?.logo?.name || "Logo"} 
+    className="h-full w-full object-contain"
+  />
+</Link>
 
         {/* Desktop Navigation */}
         <Navigation services={aemNavigation?.services || []} isScrolled={isScrolled} />
