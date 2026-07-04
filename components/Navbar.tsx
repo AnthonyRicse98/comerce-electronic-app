@@ -42,9 +42,8 @@ const Navigation = ({ services, isScrolled }: { services: servicesProps[], isScr
           key={item.id}
           // Lógica: Si isScrolled es true, texto blanco. Si no, negro.
           // El hover siempre es celeste (sky-500).
-          className={`transition text-sm font-medium hover:text-sky-500 ${
-            isScrolled ? 'text-white' : 'text-neutral-950'
-          }`}
+          className={`transition text-sm font-medium hover:text-sky-500 ${isScrolled ? 'text-black' : 'text-neutral-950'
+            }`}
           href={item.route}
         >
           {item.name}
@@ -138,12 +137,11 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
 
   return (
     <header
-  className={`sticky z-20 top-0 w-full transition-all duration-300 border-b flex items-center justify-between ${
-    isScrolled 
-      ? 'bg-neutral-950/60 backdrop-blur-md border-white/10' // Efecto "vidrio" al bajar
-      : 'bg-white border-transparent'                        // Blanco sólido al inicio
-  } ${className}`}
->
+      className={`sticky z-20 top-0 w-full transition-all duration-300 border-b flex items-center justify-between ${isScrolled
+          ? 'bg-white backdrop-blur-md border-white/10' // Efecto "vidrio" al bajar
+          : 'bg-white border-transparent'                        // Blanco sólido al inicio
+        } ${className}`}
+    >
       <div className="flex sm:px-6 lg:pl-46 lg:pr-52 w-full h-16 border-neutral-50/10 border ring-0 pr-4 pl-4 space-x-6 items-center justify-between">
         {/* Mobile Menu Toggle Button */}
         <button
@@ -191,17 +189,17 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
         </button>
 
         {/* Logo */}
-<Link
-  href="/"
-  className="inline-flex items-center justify-center w-[120px] h-10 min-w-[120px] shrink-0"
-  aria-label={aemNavigation?.logo?.name}
->
-  <img 
-    src="logo.svg" 
-    alt={aemNavigation?.logo?.name || "Logo"} 
-    className="h-full w-full object-contain"
-  />
-</Link>
+        <Link
+          href="/"
+          className="inline-flex items-center justify-center w-[120px] h-10 min-w-[120px] shrink-0"
+          aria-label={aemNavigation?.logo?.name}
+        >
+          <img
+            src="logo_expand.png"
+            alt={aemNavigation?.logo?.name || "Logo"}
+            className="h-full w-full object-contain"
+          />
+        </Link>
 
         {/* Desktop Navigation */}
         <Navigation services={aemNavigation?.services || []} isScrolled={isScrolled} />
