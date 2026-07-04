@@ -8,8 +8,11 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'AIDashboard — AI analytics that accelerate growth',
-  description: 'AIDashboard helps product and revenue teams turn data into action with AI-powered analytics.',
+  title: 'Sime Power',
+  description: 'Sime Power - Soluciones Energéticas',
+  icons:{
+    icon: '/vercel.svg',
+  }
 };
 
 export default async function RootLayout({
@@ -27,6 +30,7 @@ export default async function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" href="/vercel.svg" type="image/svg+xml" />
       </head>
       <body className={`${inter.className} antialiased text-neutral-100 bg-neutral-950`}>
         <Navbar aemNavigation={aemNavigation.collection} />
