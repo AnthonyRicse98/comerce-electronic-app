@@ -8,9 +8,10 @@ export function cn(...inputs: ClassValue[]) {
 interface SVGButtonProps {
   children: React.ReactNode;
   className?: string;
+  color: string;
 }
 
-export const SVGButton = ({ children, className }: SVGButtonProps) => {
+export const SVGButton = ({ children, className, color }: SVGButtonProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +19,7 @@ export const SVGButton = ({ children, className }: SVGButtonProps) => {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="black"
+      stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"

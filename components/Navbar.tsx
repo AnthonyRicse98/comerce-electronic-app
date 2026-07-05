@@ -79,7 +79,7 @@ const MobileMenu = ({ isOpen, onClose, services }: MobileMenuProps) => {
         <div className="pt-4 border-t border-white/10 flex flex-col gap-3">
           <button className="inline-flex transition overflow-hidden group text-sm font-medium rounded-full py-2 px-4 gap-x-2 items-center justify-center border border-black bg-black text-white hover:bg-neutral-800">
             <span>Cotizar</span>
-            <SVGButton className="transition-all duration-400 group-hover:translate-x-1">
+            <SVGButton className="transition-all duration-400 group-hover:translate-x-1" color='black'>
               <path d="M5 12h14"></path>
               <path d="m12 5 7 7-7 7"></path>
             </SVGButton>
@@ -142,12 +142,12 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
           onClick={toggleMobileMenu}
         >
           {isMobileMenuOpen ? (
-            <SVGButton className="lucide lucide-x">
+            <SVGButton className="lucide lucide-x" color='black'>
               <path className='bg-black' d="M18 6 6 18"></path>
               <path className='bg-black' d="m6 6 12 12"></path>
             </SVGButton>
           ) : (
-            <SVGButton className="lucide lucide-menu">
+            <SVGButton className="lucide lucide-menu" color='black'>
               <line x1="4" x2="20" y1="12" y2="12"></line>
               <line x1="4" x2="20" y1="6" y2="6"></line>
               <line x1="4" x2="20" y1="18" y2="18"></line>
@@ -176,8 +176,7 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
           <div className=" flex flex-col gap-3">
             <button className="inline-flex transition overflow-hidden group text-sm font-medium rounded-full py-2 px-4 gap-x-2 items-center justify-center border border-black bg-black text-white hover:bg-neutral-800">
               <span>Cotizar</span>
-              <SVGButton className="transition-all duration-400 group-hover:translate-x-1"
-              >
+              <SVGButton className="transition-all duration-400 group-hover:translate-x-1" color='white'>
                 <path d="M5 12h14"></path>
                 <path d="m12 5 7 7-7 7"></path>
               </SVGButton>
@@ -191,8 +190,7 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
             <span className="relative z-10 transition-all duration-300">
               Cotizar
             </span>
-            <SVGButton className="transition-all duration-400 group-hover:translate-x-1"
-            >
+            <SVGButton className="transition-all duration-400 group-hover:translate-x-1" color='white'>
               <path d="M5 12h14"></path>
               <path d="m12 5 7 7-7 7"></path>
             </SVGButton>

@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ElectronicRepository } from '@/core/aplication/repository/electronic.repository';
 import { Navbar } from '@/components/Navbar';
-
+import { t } from '@/literals';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Sime Power',
-  description: 'Sime Power - Soluciones Energéticas',
+  title: `${t('SIME-POWER-TITLE')} | ${t('SIME-POWER-DESCRIPTION')}`,
+  description: t('SIME-POWER-DESCRIPTION'),
   icons:{
     icon: '/vercel.svg',
   }
