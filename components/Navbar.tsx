@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from "next/link";
+import { SVGButton } from '@/lib/utils';
 // Types
 interface NavItem {
   label: string;
@@ -57,7 +58,6 @@ const Navigation = ({ services, isScrolled }: { services: servicesProps[], isScr
 const MobileMenu = ({ isOpen, onClose, services }: MobileMenuProps) => {
   // This would typically come from your links file
 
-
   return (
     <div
       id="mobile-menu"
@@ -79,21 +79,10 @@ const MobileMenu = ({ isOpen, onClose, services }: MobileMenuProps) => {
         <div className="pt-4 border-t border-white/10 flex flex-col gap-3">
           <button className="inline-flex transition overflow-hidden group text-sm font-medium rounded-full py-2 px-4 gap-x-2 items-center justify-center border border-black bg-black text-white hover:bg-neutral-800">
             <span>Cotizar</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="transition-all duration-400 group-hover:translate-x-1"
-            >
+            <SVGButton className="transition-all duration-400 group-hover:translate-x-1">
               <path d="M5 12h14"></path>
               <path d="m12 5 7 7-7 7"></path>
-            </svg>
+            </SVGButton>
           </button>
         </div>
       </nav>
@@ -138,8 +127,8 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
   return (
     <header
       className={`sticky z-20 top-0 w-full transition-all duration-300 border-b flex items-center justify-between ${isScrolled
-          ? 'bg-white backdrop-blur-md border-white/10' // Efecto "vidrio" al bajar
-          : 'bg-white border-transparent'                        // Blanco sólido al inicio
+        ? 'bg-white backdrop-blur-md border-white/10' // Efecto "vidrio" al bajar
+        : 'bg-white border-transparent'                        // Blanco sólido al inicio
         } ${className}`}
     >
       <div className="flex sm:px-6 lg:pl-46 lg:pr-52 w-full h-16 border-neutral-50/10 border ring-0 pr-4 pl-4 space-x-6 items-center justify-between">
@@ -153,38 +142,16 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
           onClick={toggleMobileMenu}
         >
           {isMobileMenuOpen ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="black"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-x bg-"
-            >
+            <SVGButton className="lucide lucide-x">
               <path className='bg-black' d="M18 6 6 18"></path>
               <path className='bg-black' d="m6 6 12 12"></path>
-            </svg>
+            </SVGButton>
           ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="black"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-menu"
-            >
+            <SVGButton className="lucide lucide-menu">
               <line x1="4" x2="20" y1="12" y2="12"></line>
               <line x1="4" x2="20" y1="6" y2="6"></line>
               <line x1="4" x2="20" y1="18" y2="18"></line>
-            </svg>
+            </SVGButton>
           )}
         </button>
 
@@ -209,21 +176,11 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
           <div className=" flex flex-col gap-3">
             <button className="inline-flex transition overflow-hidden group text-sm font-medium rounded-full py-2 px-4 gap-x-2 items-center justify-center border border-black bg-black text-white hover:bg-neutral-800">
               <span>Cotizar</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="transition-all duration-400 group-hover:translate-x-1"
+              <SVGButton className="transition-all duration-400 group-hover:translate-x-1"
               >
                 <path d="M5 12h14"></path>
                 <path d="m12 5 7 7-7 7"></path>
-              </svg>
+              </SVGButton>
             </button>
           </div>
         </div>
@@ -234,21 +191,11 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
             <span className="relative z-10 transition-all duration-300">
               Cotizar
             </span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="ml-2 transition-all duration-400 group-hover:translate-x-1"
+            <SVGButton className="transition-all duration-400 group-hover:translate-x-1"
             >
               <path d="M5 12h14"></path>
               <path d="m12 5 7 7-7 7"></path>
-            </svg>
+            </SVGButton>
           </button>
         </div>
       </div>
