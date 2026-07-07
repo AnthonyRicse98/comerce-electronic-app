@@ -28,7 +28,7 @@ const defaultProduct: Product = {
     reviews: 105,
     price: 684,
     oldPrice: 855,
-    image: "https://images.shadcnspace.com/assets/ecommerce/product-category/product-category-03-1.webp",
+    image: "https://provejec.com/wp-content/uploads/2024/09/PROVEJEC-WEB-13.png",
     onSale: true,
 };
 
@@ -36,15 +36,21 @@ const CardProduct = ({ product = defaultProduct }: ProductCategoryProps) => {
 
     return (
         <div className="flex items-center justify-center">
-            <div className="w-67.5 shrink-0">
-                <Card className="p-0 ring-0 gap-0 overflow-hidden border border-neutral-100 shadow-sm bg-card rounded-2xl">                    <div className="relative rounded-t-2xl h-55 overflow-hidden flex items-center justify-center">
-                    <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-               
-                </div>
+            <div className="w-77.5   shrink-0">
+                <Card className="p-0 ring-0 gap-0 overflow-hidden border border-neutral-100 shadow-sm bg-card rounded-2xl">
+                    <div className="relative rounded-t-2xl h-80 overflow-hidden flex items-center justify-center">
+
+
+                        <div className="relative w-full h-70 overflow-hidden">
+                            <img
+                                src={product.image}
+                                alt={product.name}
+                                className="w-100 h-full object-contain transition-transform duration-500 group-hover:scale-110 block"
+                            // 'block' elimina el espacio extra que los elementos inline pueden dejar abajo
+                            />
+                        </div>
+
+                    </div>
                     <CardContent className="p-5 flex flex-col gap-3">
                         <div className="flex flex-col gap-2">
                             <p className="text-sm font-normal text-muted-foreground">
@@ -58,7 +64,7 @@ const CardProduct = ({ product = defaultProduct }: ProductCategoryProps) => {
                             variant="outline"
                             className="w-full h-10 bg-amber-600 text-white rounded-lg font-medium border-border transition-colors duration-300 dark:bg-background dark:border-border cursor-pointer"
                         >
-                           Ver más
+                            Ver más
                         </Button>
                     </CardContent>
                 </Card>
