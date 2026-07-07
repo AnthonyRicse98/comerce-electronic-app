@@ -8,5 +8,9 @@ export const ElectronicRepository = {
 
   async getHomeMedia() {
     return ElectronicServices.getHomePageMedia();
+  },
+
+  async getHomeInformation() {
+    return ElectronicServices.getHomeInformation();
   }
 };

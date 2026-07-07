@@ -29,5 +29,21 @@ export const ElectronicServices = {
     const { content } = data.collection;
 
     return content;
+  },
+
+  async getHomeInformation(){
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+      .from("electronic-app")
+      .select("name, collection")
+      .eq("name", "homepage")
+      .single();
+
+    if (error) throw new Error(error.message);
+
+    const { information } = data.collection;
+
+    return information;
   }
 };

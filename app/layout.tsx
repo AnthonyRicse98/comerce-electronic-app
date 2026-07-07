@@ -22,7 +22,7 @@ export default async function RootLayout({
 }) {
      const aemNavigation = await ElectronicRepository.getNavigation();
   return (
-    <html lang="en" className="">
+    <html lang="es" className="translate.ltr">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />

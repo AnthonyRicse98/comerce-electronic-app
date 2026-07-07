@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { DashboardPreview } from './DashboardPreview';
 
 const HeroStats = () => {
   return (
@@ -263,17 +262,19 @@ const ProductPreview = () => {
           '--border-radius-before': '16px'
         } as React.CSSProperties}
         data-scroll-animate="blur-up"
-      >
-        <div className="lg:px-6 pb-6 pt-1 text-center text-neutral-400">
-          <DashboardPreview/>
+      >{
+        /*
+         <div className="lg:px-6 pb-6 pt-1 text-center text-neutral-400">
         </div>
+        */
+      }
+       
       </div>
     </div>
   );
 };
 
 export const Hero = ({ multimedia }: { multimedia: any }) => {
-  console.log(multimedia);
   return (
     <section className="pb-12 relative" id="home">
       {/* Background Elements */}
