@@ -17,6 +17,7 @@ html.dark {
 }
 
 body {
+  font-family: 'Aclonica',Helvetica, Arial, Sans-Serif, serif;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,

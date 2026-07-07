@@ -15,7 +15,7 @@ export const ElectronicServices = {
     return data;
   },
 
-  async getHomePageMedia(){
+  async getHomePageMedia() {
     const supabase = await createClient();
 
     const { data, error } = await supabase
@@ -31,7 +31,7 @@ export const ElectronicServices = {
     return content;
   },
 
-  async getHomeInformation(){
+  async getHomeInformation() {
     const supabase = await createClient();
 
     const { data, error } = await supabase
@@ -44,6 +44,12 @@ export const ElectronicServices = {
 
     const { information } = data.collection;
 
-    return information;
+    return {
+      homeInformation: information.infoContent1,
+      homeProducts: {
+        title: information.infoTitle2,
+        description: information.infoDescription2
+      }
+    };
   }
 };
