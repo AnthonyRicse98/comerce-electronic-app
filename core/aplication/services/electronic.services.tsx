@@ -45,7 +45,11 @@ export const ElectronicServices = {
     const { information } = data.collection;
 
     return {
-      homeInformation: information.infoContent1,
+      homeInformation: {
+        title: information.infoTitle1,
+        description: information.infoDescription1,
+        cardInfo : information.infoContent1,
+      },
       homeProducts: {
         title: information.infoTitle2,
         description: information.infoDescription2

@@ -15,16 +15,21 @@ export default async function Home() {
   const { homeInformation, homeProducts } = await ElectronicRepository.getHomeInformation();
 
   const { homepage_media } = homeMultimedia;
+  const { cardInfo } = homeInformation
 
-  console.log(homeProducts)
+  console.log(homeInformation)
   return (
     <main>
-      <Hero multimedia={homepage_media} />
-      <CardInformation information={homeInformation} />
+      <Hero
+        title={homeInformation.title}
+        description={homeInformation.description}
+        multimedia={homepage_media} />
+      <CardInformation information={cardInfo} />
       <Features
         title={homeProducts.title}
         description={homeProducts.description}
-      />      <Pricing />
+      />
+      <Pricing />
       <Testimonials />
       <CTA />
       <FAQ />

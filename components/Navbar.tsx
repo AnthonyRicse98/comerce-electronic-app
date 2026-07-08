@@ -73,18 +73,19 @@ const Navigation = ({ services, isScrolled }: { services: servicesProps[]; isScr
                 >
                   {item.name}
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="shadow-none outline-none">                  <ul className="grid w-[200px] gap-1 p-2 bg-white border-none rounded-xl shadow-xl border border-neutral-100">
-                  {item.content.map((subItem, idx) => (
-                    <li key={idx}>
-                      <Link
-                        href={getFormatRoute(item.route)}
-                        className="block select-none rounded-lg p-2 text-sm font-medium text-neutral-700 no-underline outline-none transition-colors hover:bg-neutral-50 hover:text-sky-500"
-                      >
-                        {subItem.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                <NavigationMenuContent className="shadow-none outline-none">
+                  <ul className="grid w-[200px] gap-1 p-2 bg-white border-none rounded-xl shadow-xl border border-neutral-100">
+                    {item.content.map((subItem, idx) => (
+                      <li key={idx}>
+                        <Link
+                          href={getFormatRoute(item.route)}
+                          className="block select-none rounded-lg p-2 text-sm font-medium text-neutral-700 no-underline outline-none transition-colors hover:bg-neutral-50 hover:text-sky-500"
+                        >
+                          {subItem.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             );
@@ -95,7 +96,7 @@ const Navigation = ({ services, isScrolled }: { services: servicesProps[]; isScr
             <NavigationMenuItem key={item.id}>
               <NavigationMenuLink
                 href={getFormatRoute(item.route)}
-                className={`bg-transparent hover:bg-transparent transition text-sm font-medium border-none shadow-none focus:bg-transparent px-3 py-2 rounded-md block ${textClass}`}
+                className={`bg-transparent hover:bg-transparent transition text-sm font-medium border-none shadow-none  hover:text-sky-500 focus:bg-transparent px-3 py-2 rounded-md block ${textClass}`}
               >
                 {item.name}
               </NavigationMenuLink>
@@ -201,8 +202,8 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
   return (
     <header
       className={`sticky z-20 top-0 w-full transition-all duration-300 border-b flex items-center justify-between ${isScrolled
-          ? 'bg-white/90 backdrop-blur-md border-neutral-200 shadow-sm'
-          : 'bg-white border-transparent'
+        ? 'bg-white/90 backdrop-blur-md border-neutral-200 shadow-sm'
+        : 'bg-white border-transparent'
         } ${className}`}
     >
       <div className="flex sm:px-6 lg:pl-46 lg:pr-52 w-full h-16 border-neutral-50/10 border ring-0 pr-4 pl-4 space-x-6 items-center justify-between">
