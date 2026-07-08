@@ -143,7 +143,7 @@ const FooterMain = ({ aemNavigation }: FooterProps) => {
           <span className="inline-block transition-colors hover:text-neutral-800">{t('SIME-POWER-TITLE').toUpperCase()} - {aemNavigation?.description}</span>
         </div>
         <div className="text-sm text-neutral-500">
-          <span className="inline-block transition-colors hover:text-neutral-800">{t('SIME-POWER-PHONE')} : {aemNavigation?.phone}</span>
+          <span className="inline-block transition-colors hover:text-neutral-800">{t('SIME-POWER-PHONE')}:{aemNavigation?.phone}</span>
         </div>
         <div className="text-sm text-neutral-500">
           <span className="inline-block transition-colors hover:text-neutral-800">{t('SIME-POWER-DEVELOPER')}</span>
