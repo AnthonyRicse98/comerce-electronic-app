@@ -13,7 +13,7 @@ const OurselveTitle = ({ title, description }: OuserlveProps) => {
   return (
     /* CORRECCIÓN: Quitamos los paddings exagerados (pt-[470px]). 
        Ahora usamos un flujo normal con py-16 (padding arriba y abajo) y mt-24 para separarlo con seguridad de la sección superior. */
-    <div className="px-4 py-2 mt-24 lg:px-8 max-w-6xl mx-auto">
+    <div className="px-8 py-0 mt-18 lg:px-8 max-w-6xl mx-auto">
       <div className="text-center mb-12 in-view" data-scroll-animate-children="">
         <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-center mt-2 text-black">
           {
