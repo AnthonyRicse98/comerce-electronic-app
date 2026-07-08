@@ -29,11 +29,14 @@ export default async function Home() {
         title={homeProducts.title}
         description={homeProducts.description}
       />
+      {
+      /*
       <Pricing />
       <Testimonials />
       <CTA />
       <FAQ />
-      <Footer />
+      */
+      }
     </main>
   );
 }

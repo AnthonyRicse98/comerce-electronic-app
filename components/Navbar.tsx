@@ -28,7 +28,7 @@ interface servicesProps {
   name: string;
   slug: string;
   route: string;
-  content?: SubItemProps[];
+  content?: SubItemProps[]; 
 }
 
 interface NavbarProps {
@@ -62,7 +62,7 @@ const Navigation = ({ services, isScrolled }: { services: servicesProps[]; isScr
 
   return (
     <NavigationMenu className="hidden lg:flex">
-      <NavigationMenuList className="flex gap-x-2 items-center ">
+      <NavigationMenuList className="flex gap-x-2 items-center">
         {services.map((item) => {
           // Si el item cuenta con la propiedad content y tiene elementos, renderiza el dropdown
           if (item.content && item.content.length > 0) {
@@ -73,10 +73,14 @@ const Navigation = ({ services, isScrolled }: { services: servicesProps[]; isScr
                 >
                   {item.name}
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="shadow-none outline-none">
-                  <ul className="grid w-[200px] gap-1 p-2 bg-white border-none rounded-xl shadow-xl border border-neutral-100">
+                <NavigationMenuContent>
+                  <ul className="grid w-[200px] gap-1 p-2 bg-white rounded-xl shadow-xl border border-neutral-100">
                     {item.content.map((subItem, idx) => (
                       <li key={idx}>
+                        {/* CORRECCIÓN DEFINITIVA: 
+                          1. Usamos asChild + Link (Next.js 15 estándar sin errores).
+                          2. Pasamos solo la ruta principal del padre (item.route) en lugar de concatenar el slug.
+                        */}
                         <Link
                           href={getFormatRoute(item.route)}
                           className="block select-none rounded-lg p-2 text-sm font-medium text-neutral-700 no-underline outline-none transition-colors hover:bg-neutral-50 hover:text-sky-500"
@@ -113,8 +117,9 @@ const MobileMenu = ({ isOpen, onClose, services }: MobileMenuProps) => {
   return (
     <div
       id="mobile-menu"
-      className={`lg:hidden absolute top-16 left-0 right-0 bg-neutral-950/95 backdrop-blur-xl border-b border-white/10 shadow-2xl ${isOpen ? 'block' : 'hidden'
-        }`}
+      className={`lg:hidden absolute top-16 left-0 right-0 bg-neutral-950/95 backdrop-blur-xl border-b border-white/10 shadow-2xl ${
+        isOpen ? 'block' : 'hidden'
+      }`}
       style={{ animation: 'slideDown 0.3s ease-out' }}
     >
       <nav className="flex flex-col px-4 py-6 space-y-3 max-h-[75vh] overflow-y-auto">
@@ -201,13 +206,14 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
 
   return (
     <header
-      className={`sticky z-20 top-0 w-full transition-all duration-300 border-b flex items-center justify-between ${isScrolled
-        ? 'bg-white/90 backdrop-blur-md border-neutral-200 shadow-sm'
-        : 'bg-white border-transparent'
-        } ${className}`}
+      className={`sticky z-20 top-0 w-full transition-all duration-300 border-b flex items-center justify-between ${
+        isScrolled
+          ? 'bg-white/90 backdrop-blur-md border-neutral-200 shadow-sm'
+          : 'bg-white border-transparent'
+      } ${className}`}
     >
       <div className="flex sm:px-6 lg:pl-46 lg:pr-52 w-full h-16 border-neutral-50/10 border ring-0 pr-4 pl-4 space-x-6 items-center justify-between">
-
+        
         {/* Mobile Menu Toggle Button */}
         <button
           id="mobile-menu-toggle"

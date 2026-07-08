@@ -1,5 +1,7 @@
 'use client';
 
+import { t } from '@/literals';
+import Link from 'next/link';
 import { JSX } from 'react';
 
 // Types
@@ -17,10 +19,9 @@ interface SocialLink {
 
 // Navigation data (debes reemplazar esto con tu data real)
 const navItems: FooterLink[] = [
-  { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Services', href: '/services' },
-  { label: 'Contact', href: '/contact' }
+  { label: 'Inicio', href: '/' },
+  { label: 'Servicios', href: '/' },
+  { label: 'Contacto', href: '/' }
 ];
 
 const socialLinks: SocialLink[] = [
@@ -43,6 +44,36 @@ const socialLinks: SocialLink[] = [
     label: 'Twitter'
   },
 ];
+interface SubItemProps {
+  name: string;
+  slug: string;
+}
+
+interface servicesProps {
+  id: number;
+  name: string;
+  slug: string;
+  route: string;
+  content?: SubItemProps[];
+}
+
+interface AEMNavigationProps {
+  logo: {
+    name: string;
+    image: string;
+    route?: string;
+  };
+  phone?: string,
+  social?: string,
+  description?: string,
+  services: servicesProps[];
+}
+
+interface FooterProps {
+  className?: string;
+  aemNavigation?: AEMNavigationProps;
+}
+
 
 // Social Icon Component
 const SocialIcon = ({ icon }: { icon: string }) => {
@@ -72,52 +103,62 @@ const SocialIcon = ({ icon }: { icon: string }) => {
 };
 
 // FooterMain Component
-const FooterMain = () => {
+const FooterMain = ({ aemNavigation }: FooterProps) => {
   return (
     <div data-card="site-footer" className="space-y-8 in-view" data-scroll-animate="fade-up">
       <div className="flex flex-col md:flex-row gap-6 px-6 gap-x-6 gap-y-6 items-center justify-between">
         {/* Brand */}
-        <a 
-          href="#" 
-          className="inline-flex items-center justify-center bg-center mix-blend-screen w-[100px] h-10 bg-cover rounded"
-          aria-label="AIDashboard Home"
-        >AIDashboard</a>
+        <Link
+          href={aemNavigation?.logo?.route || "/"}
+          className="inline-flex items-center justify-center w-[150px]  min-w-[250px] shrink-0"
+          aria-label={aemNavigation?.logo?.name}
+        >
+          <img
+            src="logo_expand.png"
+            alt={aemNavigation?.logo?.name || "Logo"}
+            className="h-full w-full object-contain"
+          />
+        </Link>
+
 
         {/* Navigation */}
         <nav className="grid grid-cols-3 sm:flex sm:flex-row items-center gap-4 text-sm">
-          {navItems.map((link) => (
-            <a 
-              key={link.href}
-              href={link.href}
-              className="transition text-neutral-300 hover:text-white whitespace-nowrap"
+          {navItems.map((service) => (
+            <Link
+              key={service.label}
+              href={service.href}
+              className="transition text-neutral-600 hover:text-neutral-800 whitespace-nowrap"
             >
-              {link.label}
-            </a>
+              {service.label}
+            </Link>
           ))}
         </nav>
+
       </div>
 
-      <div className="w-full h-px bg-white/10"></div>
+      <div className="w-full  bg-black/210"></div>
 
       <div className="flex flex-col sm:flex-row gap-4 px-6 gap-x-4 gap-y-4 items-center justify-between">
-        <div className="text-sm text-neutral-400">
-          Crafted by Lumen Studio. All rights reserved. © 2026
+        <div className="text-sm text-neutral-500">
+          <span className="inline-block transition-colors hover:text-neutral-800">{t('SIME-POWER-TITLE').toUpperCase()} - {aemNavigation?.description}</span>
         </div>
-        
+        <div className="text-sm text-neutral-500">
+          <span className="inline-block transition-colors hover:text-neutral-800">{t('SIME-POWER-PHONE')} : {aemNavigation?.phone}</span>
+        </div>
+        <div className="text-sm text-neutral-500">
+          <span className="inline-block transition-colors hover:text-neutral-800">{t('SIME-POWER-DEVELOPER')}</span>
+        </div>
+
         <div className="flex items-center gap-3">
           {socialLinks.map((social) => (
-            <a 
+            <Link
               key={social.platform}
               href={social.href}
               aria-label={social.label}
-              className={`inline-flex items-center justify-center w-6 h-6 rounded transition ${
-                social.platform === 'linkedin' 
-                  ? 'bg-rose-500 hover:opacity-90 text-white' 
-                  : 'border border-white/10 text-neutral-300 hover:text-white hover:bg-white/5'
-              }`}
+              className="inline-flex items-center justify-center w-6 h-6 rounded transition bg-neutral-800 hover:bg-neutral-700 text-white"
             >
               <SocialIcon icon={social.icon} />
-            </a>
+            </Link>
           ))}
         </div>
       </div>
@@ -126,11 +167,11 @@ const FooterMain = () => {
 };
 
 // Main Footer Component
-export const Footer = () => {
+export const Footer = ({ aemNavigation }: FooterProps) => {
   return (
     <footer className="sm:px-6 lg:pl-0 lg:pr-0 w-full max-w-7xl mr-auto ml-auto pt-10 pr-4 pb-10 pl-4">
       {/* Footer Main */}
-      <FooterMain />
+      <FooterMain aemNavigation={aemNavigation} />
     </footer>
   );
 };

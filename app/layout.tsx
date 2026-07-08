@@ -4,6 +4,7 @@ import { ElectronicRepository } from '@/core/aplication/repository/electronic.re
 import { Navbar } from '@/components/Navbar';
 import { t } from '@/literals';
 import './globals.css';
+import { Footer } from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -35,6 +36,7 @@ export default async function RootLayout({
       <body className={`${inter.className} antialiased text-neutral-100 bg-neutral-950`}>
         <Navbar aemNavigation={aemNavigation.collection} />
         {children}
+        <Footer aemNavigation={aemNavigation.collection} />
       </body>
     </html>
   );

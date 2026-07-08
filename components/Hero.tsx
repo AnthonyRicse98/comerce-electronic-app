@@ -21,7 +21,7 @@ const OurselveTitle = ({ title, description }: OuserlveProps) => {
           }
         </h2>
         <p
-          className="text-lg font-light sm:text-lg md:text-xl lg:text-2xl text-neutral-700 text-center mt-4"
+          className="text-lg font-extralight sm:text-lg md:text-xl lg:text-2xl text-neutral-700 text-center mt-4"
           style={{ opacity: 1, transform: 'translateY(0px)' }}
         >
           {
