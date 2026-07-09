@@ -1,6 +1,7 @@
 'use client';
 
 import Link from "next/link";
+import { WhatsAppButton } from "./WhatsAppButton"; // Importa el nuevo componente
 
 interface OuserlveProps {
   title: string,
@@ -73,16 +74,7 @@ export const Hero = ({ multimedia, title, description }: HeroProps) => {
             </h1>
           </div>
 
-          {/* Botón: Cambia de absolute (desktop) a fixed (móvil) */}
-          <Link
-            href="https://wa.me/51940058361"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="fixed bottom-10 right-6 md:absolute md:bottom-16 md:right-10 z-50 bg-green-500 hover:bg-green-600 text-white font-bold rounded-full transition-all flex items-center justify-center shadow-2xl size-12 md:size-auto md:py-3 md:px-6 md:gap-2"
-          >
-            <img src='/whatssap.svg' alt="WhatsApp" className="w-6 h-6" style={{ filter: 'brightness(0) invert(1)' }} />
-            <span className="hidden md:inline">¡Contáctanos!</span>
-          </Link>
+          <WhatsAppButton phoneNumber="51940058361" />
         </div>
 
         {/* Main Content */}
