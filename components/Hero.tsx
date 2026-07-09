@@ -58,8 +58,8 @@ export const Hero = ({ multimedia, title, description }: HeroProps) => {
             className="bg-center w-full h-full bg-cover absolute top-0"
             style={{
               backgroundImage: `url('/1_INICIO-NOSOTROS/homepage.png')`,
-              maskImage: 'linear-gradient(180deg, transparent, black 0%, black 80%, transparent)',
-              WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 80%, transparent)'
+              maskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)',
+              WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)'
             }}
           />
 
