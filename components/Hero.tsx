@@ -1,11 +1,14 @@
 'use client';
+
+import Link from "next/link";
+
 interface OuserlveProps {
   title: string,
   description: string
 }
 
 interface HeroProps extends OuserlveProps {
-   multimedia: any;
+  multimedia: any;
 }
 
 // --- ProductPreview Component (Sección independiente) ---
@@ -49,16 +52,38 @@ export const Hero = ({ multimedia, title, description }: HeroProps) => {
         >
           <div id="particles-js" className="absolute inset-0 -z-10"></div>
         </div>
+        <div className="relative w-full h-full">
+          {/* Fondo */}
+          <div
+            className="bg-center w-full h-full bg-cover absolute top-0"
+            style={{
+              backgroundImage: `url('/1_INICIO-NOSOTROS/homepage.png')`,
+              maskImage: 'linear-gradient(180deg, transparent, black 0%, black 80%, transparent)',
+              WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 80%, transparent)'
+            }}
+          />
 
-        <div
-          className="bg-center opacity-120 w-full h-full bg-cover absolute top-0"
-          style={{
-            backgroundImage: `url(${multimedia?.url})`,
-            maskImage: 'linear-gradient(180deg, transparent, black 0%, black 80%, transparent)',
-            WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 80%, transparent)'
-          }}
-          data-alpha-mask="80"
-        />
+          {/* Contenedor del Título */}
+          <div className="absolute inset-x-0 top-16 sm:top-24 flex justify-center px-4">
+            <h1
+              className="text-white text-2xl sm:text-4xl md:text-6xl font-bold text-center max-w-3xl"
+              style={{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
+            >
+              { multimedia.description }
+            </h1>
+          </div>
+
+          {/* Botón: Cambia de absolute (desktop) a fixed (móvil) */}
+          <Link
+            href="https://wa.me/51940058361"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fixed bottom-10 right-6 md:absolute md:bottom-16 md:right-10 z-50 bg-green-500 hover:bg-green-600 text-white font-bold rounded-full transition-all flex items-center justify-center shadow-2xl size-12 md:size-auto md:py-3 md:px-6 md:gap-2"
+          >
+            <img src='/whatssap.svg' alt="WhatsApp" className="w-6 h-6" style={{ filter: 'brightness(0) invert(1)' }} />
+            <span className="hidden md:inline">¡Contáctanos!</span>
+          </Link>
+        </div>
 
         {/* Main Content */}
         <div className="sm:px-6 lg:px-8 sm:pt-24 max-w-3xl mx-auto pt-16 px-4 in-view relative z-10" data-scroll-animate-children="">

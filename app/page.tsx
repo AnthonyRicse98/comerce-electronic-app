@@ -17,7 +17,6 @@ export default async function Home() {
   const { homepage_media } = homeMultimedia;
   const { cardInfo } = homeInformation
 
-  console.log(homeInformation)
   return (
     <main>
       <Hero
