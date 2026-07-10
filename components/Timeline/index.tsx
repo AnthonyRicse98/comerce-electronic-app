@@ -13,6 +13,7 @@ interface DataProps {
     post: { // Define the structure of the post array items
         post_subtitle: string;
         post_information: string;
+        post_image?: string; // Add the missing property
     }[];
 }
 
