@@ -77,12 +77,8 @@ const Navigation = ({ services, isScrolled }: { services: servicesProps[]; isScr
                   <ul className="grid w-[200px] gap-1 p-2 bg-white rounded-xl shadow-xl border border-neutral-100">
                     {item.content.map((subItem, idx) => (
                       <li key={idx}>
-                        {/* CORRECCIÓN DEFINITIVA: 
-                          1. Usamos asChild + Link (Next.js 15 estándar sin errores).
-                          2. Pasamos solo la ruta principal del padre (item.route) en lugar de concatenar el slug.
-                        */}
                         <Link
-                          href={getFormatRoute(item.route)}
+                          href={getFormatRoute(`${item.route}/${subItem.slug}`)}
                           className="block select-none rounded-lg p-2 text-sm font-medium text-neutral-700 no-underline outline-none transition-colors hover:bg-neutral-50 hover:text-sky-500"
                         >
                           {subItem.name}
@@ -135,7 +131,7 @@ const MobileMenu = ({ isOpen, onClose, services }: MobileMenuProps) => {
                   <Link
                     key={idx}
                     className="text-base text-neutral-300 hover:text-white transition py-2 px-6 rounded-lg hover:bg-white/5"
-                    href={getFormatRoute(item.route)}
+                    href={getFormatRoute(`${item.route}/${subItem.slug}`)}
                     onClick={onClose}
                   >
                     {subItem.name}
@@ -244,7 +240,7 @@ export const Navbar = ({ className = '', aemNavigation }: NavbarProps) => {
           aria-label={aemNavigation?.logo?.name}
         >
           <img
-            src="logo_expand.png"
+            src="/logo_expand.png"
             alt={aemNavigation?.logo?.name || "Logo"}
             className="h-full w-full object-contain"
           />

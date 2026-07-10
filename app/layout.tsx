@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ElectronicRepository } from '@/core/aplication/repository/electronic.repository';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
+
 import { t } from '@/literals';
 import './globals.css';
-import { Footer } from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,7 +22,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-     const aemNavigation = await ElectronicRepository.getNavigation();
+  const aemNavigation = await ElectronicRepository.getNavigation();
+  // Proporciona un objeto predeterminado si aemNavigation es null
+  const navigationData = aemNavigation;
+
   return (
     <html lang="es" className="translate.ltr">
       <head>
@@ -34,9 +38,9 @@ export default async function RootLayout({
         <link rel="icon" href="/vercel.svg" type="image/svg+xml" />
       </head>
       <body className={`${inter.className} antialiased text-neutral-100 bg-neutral-950`}>
-        <Navbar aemNavigation={aemNavigation.collection} />
+        <Navbar aemNavigation={navigationData.collection} />
         {children}
-        <Footer aemNavigation={aemNavigation.collection} />
+        <Footer aemNavigation={navigationData.collection} />
       </body>
     </html>
   );

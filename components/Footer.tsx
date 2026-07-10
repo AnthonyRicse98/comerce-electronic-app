@@ -114,7 +114,7 @@ const FooterMain = ({ aemNavigation }: FooterProps) => {
           aria-label={aemNavigation?.logo?.name}
         >
           <img
-            src="logo_expand.png"
+            src="/logo_expand.png"
             alt={aemNavigation?.logo?.name || "Logo"}
             className="h-full w-full object-contain"
           />

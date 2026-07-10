@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
+import { title } from "process";
 
 export const ElectronicServices = {
   async getNavigation() {
@@ -55,5 +56,41 @@ export const ElectronicServices = {
         description: information.infoDescription2
       }
     };
-  }
+  },
+
+  async getGroupElectronic() {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+      .from("electronic-app")
+      .select("name, collection")
+      .eq("name", "group-electronic")
+      .single();
+
+    if (error) throw new Error(error.message);
+
+    const { information, content } = data.collection;
+    return {
+      information:{
+        title: information.information_title,
+        description : information.information_description
+      },
+      maintenance: {
+        title:content.maintenance_title,
+        post:content.maintenance_post
+      },
+      rent:{
+        title:content.rent_title,
+        post:content.rent_post
+      },
+      sell:{
+        title:content.sell_title,
+        post:content.sell_post
+      },
+      replacement:{
+        title:content.replacement_title,
+        post:content.replacement_post
+      }
+    }
+  },
 };

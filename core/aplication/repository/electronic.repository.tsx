@@ -12,5 +12,9 @@ export const ElectronicRepository = {
 
   async getHomeInformation() {
     return ElectronicServices.getHomeInformation();
+  },
+
+  async getGroupElectronic(){
+    return ElectronicServices.getGroupElectronic();
   }
 };
