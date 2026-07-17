@@ -3,6 +3,11 @@
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
+// --- 1. IMPORTACIÓN DEL COMPONENTE LIGHTBOX ---
+// Ajusta la ruta de importación según dónde guardaste el archivo del paso anterior.
+// En este ejemplo, asumo que está en la misma carpeta o un nivel arriba en components.
+import { Lightbox } from "@/components/LightBox/lightbox"
+
 
 export interface TimelineItemProps {
   title: string;
@@ -69,11 +74,27 @@ const TimelineItem = ({
             transition={{ duration: 0.5 }}
             className="relative aspect-4/3 w-full overflow-hidden rounded-2xl"
           >
-            <img
-              src={image}
-              alt={title}
-              className="absolute inset-0 h-full w-full object-cover object-top"
-            />
+            {/* --- 2. INTEGRACIÓN DEL LIGHTBOX --- */}
+            {/* 
+              Envolvemos la imagen con el componente Lightbox.
+              He quitado 'rounded-2xl' del div motion contenedor
+              y he añadido estilos de tarjeta (shaddow-md, bg-card, border)
+              para que el Lightbox tenga su propio contorno definido.
+            */}
+            <Lightbox
+              imageSrc={image} 
+              title={title} 
+              subtitle={slug}
+            >
+              <div className="relative w-full h-full aspect-4/3 rounded-2xl bg-card border border-border shadow-md overflow-hidden">
+                <img
+                  src={image}
+                  alt={title}
+                  className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
+            </Lightbox>
+            {/* ------------------------------------- */}
           </motion.div>
         )}
       </div>

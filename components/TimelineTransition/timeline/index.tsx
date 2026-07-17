@@ -2,9 +2,9 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { Lightbox } from "@/components/LightBox/lightbox"; 
 
 export interface TimelineItem {
     type: string;
@@ -50,11 +50,9 @@ const fadeUpVariants = {
 
 export const Timeline = ({ items = defaultItems, className }: TimelineProps) => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [isZoomOpen, setIsZoomOpen] = useState(false);
     const activeItem = items[activeIndex] || items[0];
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-    // Scroll automático al botón activo
     useEffect(() => {
         const activeRef = buttonRefs.current[activeIndex];
         if (activeRef) {
@@ -66,23 +64,8 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
         }
     }, [activeIndex]);
 
-    // Cerrar modal con Escape y bloquear scroll del body
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === "Escape") setIsZoomOpen(false);
-        };
-        if (isZoomOpen) {
-            window.addEventListener("keydown", handleKeyDown);
-            document.body.style.overflow = "hidden";
-        }
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-            document.body.style.overflow = "";
-        };
-    }, [isZoomOpen]);
-
     return (
-        <div className={cn("w-full", className)}>
+        <div className={cn("w-full relative z-0", className)}>
             <style jsx global>{`
                 .hide-scrollbar::-webkit-scrollbar {
                     display: none !important;
@@ -95,18 +78,17 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
 
             <div className="grid grid-cols-12 gap-8 lg:gap-12 items-start">
                 
-                {/* Selector de Navegación (Móvil: Horizontal Slider | Desktop: Columna Vertical) */}
-                <div className="relative flex flex-col items-center shrink-0 w-full lg:w-28 lg:col-span-1 col-span-12">
-                    {/* Línea decorativa de fondo (Solo Desktop) */}
+                {/* Selector de Navegación */}
+                {/* CORRECCIÓN: Se cambió 'relative' global por un z-index controlado (z-10 en móvil, z-20 en desktop) */}
+                <div className="relative z-10 lg:z-20 flex flex-col items-center shrink-0 w-full lg:w-28 lg:col-span-1 col-span-12">
                     <div className="absolute left-1/2 -translate-x-1/2 top-4 bottom-4 w-[2px] bg-border/40 hidden lg:block" />
 
                     <div 
                         className={cn(
-                            "flex gap-3 relative z-20 w-full items-center",
-                            // Móvil: scroll horizontal táctil sin cortes, centrado
-                            "flex-row overflow-x-auto hide-scrollbar snap-x snap-mandatory px-4 py-3 justify-start sm:justify-center",
-                            // Desktop: estructura vertical con altura fija
-                            "lg:flex-col lg:h-112 lg:overflow-y-auto lg:py-36 lg:px-0 lg:justify-start"
+                            "flex gap-3 relative w-full items-center",
+                            // CORRECCIÓN: Se reduce de z-20 a z-10 en móvil para que pase por DEBAJO del Navbar de SIME POWER
+                            "z-10 flex-row overflow-x-auto hide-scrollbar snap-x snap-mandatory px-4 py-3 justify-start sm:justify-center",
+                            "lg:z-20 lg:flex-col lg:h-112 lg:overflow-y-auto lg:py-36 lg:px-0 lg:justify-start"
                         )}
                         style={{ 
                             scrollBehavior: "smooth",
@@ -122,7 +104,6 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                                     onClick={() => setActiveIndex(index)}
                                     className={cn(
                                         "relative rounded-full transition-all duration-300 shrink-0 snap-center focus:outline-hidden cursor-pointer",
-                                        // Dimensiones táctiles perfectas para móviles vs tamaño estricto en desktop
                                         "py-2.5 px-5 min-w-[110px]", 
                                         "lg:py-3 lg:px-0 lg:w-20 lg:min-w-0", 
                                         isActive 
@@ -145,7 +126,6 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                         })}
                     </div>
 
-                    {/* Desvanecidos degradados (Solo Desktop) */}
                     <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-30 lg:block hidden" />
                     <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent pointer-events-none z-30 lg:block hidden" />
                 </div>
@@ -193,7 +173,7 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                                 </motion.p>
                             </div>
 
-                            {/* Tarjeta de Imagen sin bordes oscuros */}
+                            {/* Tarjeta de Imagen */}
                             <div className="w-full flex flex-col gap-4 lg:ps-5 lg:col-span-5">
                                 <motion.div 
                                     variants={{
@@ -201,75 +181,27 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                                         animate: { opacity: 1, scale: 1, y: 0 }
                                     }}
                                     transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                                    className="group relative overflow-hidden rounded-2xl bg-muted aspect-4/3 lg:aspect-11/9 shadow-xl"
+                                    className="w-full aspect-4/3 lg:aspect-11/9 shadow-xl rounded-2xl overflow-hidden"
                                 >
-                                    {/* Botón de Lupa Glassmorphism */}
-                                    <button
-                                        onClick={() => setIsZoomOpen(true)}
-                                        className="absolute top-5 right-5 z-20 bg-white/10 hover:bg-white/20 text-white p-3.5 rounded-full transition-all duration-300 hover:scale-110 shadow-lg cursor-pointer backdrop-blur-md border border-white/20"
-                                        aria-label="Ver imagen completa"
-                                        title="Ver imagen completa"
+                                    <Lightbox 
+                                        imageSrc={activeItem.image} 
+                                        title={activeItem.title} 
+                                        subtitle={activeItem.badge}
                                     >
-                                        <Search className="w-5 h-5" />
-                                    </button>
-
-                                    <img
-                                        src={activeItem.image}
-                                        alt={activeItem.title}
-                                        className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02] rounded-2xl"
-                                    />
+                                        <div className="w-full h-full bg-muted">
+                                            <img
+                                                src={activeItem.image}
+                                                alt={activeItem.title}
+                                                className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                                            />
+                                        </div>
+                                    </Lightbox>
                                 </motion.div>
                             </div>
                         </motion.div>
                     </AnimatePresence>
                 </div>
             </div>
-
-            {/* Modal Lightbox Animado */}
-            <AnimatePresence>
-                {isZoomOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={() => setIsZoomOpen(false)}
-                        className="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center p-4 md:p-10 cursor-zoom-out"
-                    >
-                        {/* Botón de Cierre */}
-                        <button 
-                            onClick={() => setIsZoomOpen(false)}
-                            className="absolute top-5 right-5 z-50 text-white bg-white/10 hover:bg-white/25 border border-white/10 p-3 rounded-full transition-all duration-300 cursor-pointer backdrop-blur-md"
-                        >
-                            <X className="w-6 h-6" />
-                        </button>
-
-                        {/* Contenido Ampliado */}
-                        <motion.div
-                            initial={{ scale: 0.9, y: 15 }}
-                            animate={{ scale: 1, y: 0 }}
-                            exit={{ scale: 0.9, y: 15 }}
-                            transition={{ type: "spring", damping: 25, stiffness: 180 }}
-                            className="relative max-w-5xl max-h-[90vh] flex flex-col items-center justify-center"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <img
-                                src={activeItem.image}
-                                alt={activeItem.title}
-                                className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
-                            />
-                            {/* Información Inferior */}
-                            <div className="mt-4 text-center">
-                                <h4 className="text-white text-lg font-semibold">
-                                    {activeItem.title}
-                                </h4>
-                                <p className="text-white/60 text-sm mt-0.5">
-                                    {activeItem.badge}
-                                </p>
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </div>
     );
 };

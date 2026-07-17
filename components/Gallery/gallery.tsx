@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
 import { useState, useRef } from "react";
-import { Search, X } from "lucide-react";
+// Importamos el nuevo componente reutilizable2
+import { Lightbox } from "@/components/LightBox/lightbox"
 
 interface ElectronicBoardData {
     title: string;
@@ -16,13 +17,10 @@ interface GalleryProps { electronicBoard: ElectronicBoardData; }
 
 const Gallery = ({ electronicBoard }: GalleryProps) => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [isZoomOpen, setIsZoomOpen] = useState(false);
-    
     const topGalleryRef = useRef<HTMLDivElement>(null);
 
     const handleCardClick = (index: number) => {
         setActiveIndex(index);
-        
         topGalleryRef.current?.scrollIntoView({ 
             behavior: "smooth", 
             block: "start" 
@@ -50,37 +48,32 @@ const Gallery = ({ electronicBoard }: GalleryProps) => {
                 <div className="max-w-7xl mx-auto px-4 lg:px-8 xl:px-16 py-6 w-full">
                     <div className="flex flex-col gap-6">
                         
-                        {/* 1. TARJETA GRANDE (Añadido 'relative z-0' para aislar el orden de apilamiento respecto al Navbar) */}
+                        {/* 1. TARJETA GRANDE CON LIGHTBOX */}
                         {electronicBoard.post.length > 0 && (
-                            <div className="group relative z-0 overflow-hidden rounded-3xl bg-transparent p-0 m-0 shadow-2xl transition-all duration-500 after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/90 after:via-black/20 after:to-transparent after:z-10">
-                                
-                                {/* BOTÓN DE LUPA CON EFECTO GLASS (Regresa a z-20 para recibir clics por encima del degradado) */}
-                                <button
-                                    onClick={() => setIsZoomOpen(true)}
-                                    className="absolute top-5 right-5 z-20 bg-white/10 hover:bg-white/20 text-white p-3.5 rounded-full transition-all duration-300 hover:scale-110 shadow-lg cursor-pointer backdrop-blur-md border border-white/20"
-                                    aria-label="Ver imagen completa"
-                                    title="Ver imagen completa"
-                                >
-                                    <Search className="w-5 h-5" />
-                                </button>
-
-                                <img
-                                    src={electronicBoard.post[activeIndex].post_image}
-                                    alt={electronicBoard.post[activeIndex].post_subtitle}
-                                    className="object-cover block w-full transition-transform duration-700 group-hover:scale-[1.01] h-[500px] md:h-[600px] lg:h-[700px] rounded-3xl"
-                                />
-                                <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 z-20 flex flex-col gap-1.5">
-                                    <span className="text-white/60 text-xs md:text-sm font-semibold uppercase tracking-wider">
-                                        {electronicBoard.title}
-                                    </span>
-                                    <h3 className="text-2xl md:text-4xl font-bold text-white tracking-tight leading-none">
-                                        {electronicBoard.post[activeIndex].post_subtitle}
-                                    </h3>
+                            <Lightbox 
+                                imageSrc={electronicBoard.post[activeIndex].post_image}
+                                title={electronicBoard.post[activeIndex].post_subtitle}
+                                subtitle={electronicBoard.title}
+                            >
+                                <div className="group relative z-0 overflow-hidden rounded-3xl bg-transparent p-0 m-0 shadow-2xl transition-all duration-500 after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/90 after:via-black/20 after:to-transparent after:z-10">
+                                    <img
+                                        src={electronicBoard.post[activeIndex].post_image}
+                                        alt={electronicBoard.post[activeIndex].post_subtitle}
+                                        className="object-cover block w-full transition-transform duration-700 group-hover:scale-[1.01] h-[500px] md:h-[600px] lg:h-[700px] rounded-3xl"
+                                    />
+                                    <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 z-20 flex flex-col gap-1.5">
+                                        <span className="text-white/60 text-xs md:text-sm font-semibold uppercase tracking-wider">
+                                            {electronicBoard.title}
+                                        </span>
+                                        <h3 className="text-2xl md:text-4xl font-bold text-white tracking-tight leading-none">
+                                            {electronicBoard.post[activeIndex].post_subtitle}
+                                        </h3>
+                                    </div>
                                 </div>
-                            </div>
+                            </Lightbox>
                         )}
 
-                        {/* 2. TARJETAS PEQUEÑAS */}
+                        {/* 2. TARJETAS PEQUEÑAS (¡También con Lightbox individual!) */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             {electronicBoard.post.map((post, index) => {
                                 if (index === activeIndex) return null;
@@ -91,21 +84,27 @@ const Gallery = ({ electronicBoard }: GalleryProps) => {
                                         onClick={() => handleCardClick(index)} 
                                         className="cursor-pointer"
                                     >
-                                        <div className="group relative overflow-hidden rounded-2xl bg-transparent p-0 m-0 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/80 after:via-black/10 after:to-transparent after:z-10">
-                                            <img
-                                                src={post.post_image}
-                                                alt={post.post_subtitle}
-                                                className="object-cover block w-full transition-transform duration-500 group-hover:scale-105 h-[250px] md:h-[300px] rounded-2xl"
-                                            />
-                                            <div className="absolute bottom-0 left-0 right-0 p-6 z-20 flex flex-col gap-1">
-                                                <span className="text-white/60 text-xs uppercase tracking-wider font-medium">
-                                                    {electronicBoard.title}
-                                                </span>
-                                                <h3 className="text-lg md:text-xl font-bold text-white leading-tight">
-                                                    {post.post_subtitle}
-                                                </h3>
+                                        <Lightbox
+                                            imageSrc={post.post_image}
+                                            title={post.post_subtitle}
+                                            subtitle={electronicBoard.title}
+                                        >
+                                            <div className="group relative overflow-hidden rounded-2xl bg-transparent p-0 m-0 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/80 after:via-black/10 after:to-transparent after:z-10">
+                                                <img
+                                                    src={post.post_image}
+                                                    alt={post.post_subtitle}
+                                                    className="object-cover block w-full transition-transform duration-500 group-hover:scale-105 h-[250px] md:h-[300px] rounded-2xl"
+                                                />
+                                                <div className="absolute bottom-0 left-0 right-0 p-6 z-20 flex flex-col gap-1">
+                                                    <span className="text-white/60 text-xs uppercase tracking-wider font-medium">
+                                                        {electronicBoard.title}
+                                                    </span>
+                                                    <h3 className="text-lg md:text-xl font-bold text-white leading-tight">
+                                                        {post.post_subtitle}
+                                                    </h3>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </Lightbox>
                                     </div>
                                 );
                             })}
@@ -114,40 +113,6 @@ const Gallery = ({ electronicBoard }: GalleryProps) => {
                     </div>
                 </div>
             </div>
-
-            {/* MODAL / LIGHTBOX PARA VER LA IMAGEN COMPLETA */}
-            {isZoomOpen && (
-                <div 
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 animate-in fade-in duration-300"
-                    onClick={() => setIsZoomOpen(false)}
-                >
-                    <button 
-                        onClick={() => setIsZoomOpen(false)}
-                        className="absolute top-5 right-5 z-50 text-white bg-white/10 hover:bg-white/25 border border-white/10 p-3 rounded-full transition-all duration-300 cursor-pointer backdrop-blur-md"
-                    >
-                        <X className="w-6 h-6" />
-                    </button>
-
-                    <div 
-                        className="relative max-w-5xl max-h-[90vh] flex flex-col items-center justify-center"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <img
-                            src={electronicBoard.post[activeIndex].post_image}
-                            alt={electronicBoard.post[activeIndex].post_subtitle}
-                            className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
-                        />
-                        <div className="mt-4 text-center">
-                            <h4 className="text-white text-lg font-semibold">
-                                {electronicBoard.post[activeIndex].post_subtitle}
-                            </h4>
-                            <p className="text-white/60 text-sm mt-0.5">
-                                {electronicBoard.title}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            )}
         </>
     );
 };
