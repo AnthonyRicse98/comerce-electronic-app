@@ -16,5 +16,9 @@ export const ElectronicRepository = {
 
   async getGroupElectronic(){
     return ElectronicServices.getGroupElectronic();
+  },
+
+  async getElectronicBoard(){
+    return ElectronicServices.getElectronicBoard();
   }
 };

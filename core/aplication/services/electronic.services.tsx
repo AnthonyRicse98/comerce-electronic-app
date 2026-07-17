@@ -93,4 +93,25 @@ export const ElectronicServices = {
       }
     }
   },
+
+  async getElectronicBoard() {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+      .from("electronic-app")
+      .select("name, collection")
+      .eq("name", "electronic-board")
+      .single();
+
+    if (error) throw new Error(error.message);
+
+    const { information, content } = data.collection;
+
+    return {
+      electronicBoard: {
+        title: content.electronic_board_title,
+        post: content.electronic_board_post
+      },
+    };
+  },
 };
