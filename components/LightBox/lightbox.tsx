@@ -45,16 +45,16 @@ export const Lightbox = ({ imageSrc, title, subtitle, children }: LightboxProps)
     <>
       <div className="relative group overflow-hidden rounded-2xl w-full h-full">
         {children}
-        {/* CORRECCIÓN AQUÍ: removido 'opacity-0' global. Ahora es visible en móviles siempre, y se oculta con 'md:opacity-0' sólo en pantallas grandes */}
+        {/* LUPA 100% UNIVERSAL: Fondo negro sólido, borde gris de alto contraste e ícono blanco brillante */}
         <button
           onClick={(e) => {
             e.stopPropagation();
             setIsOpen(true);
           }}
-          className="absolute top-4 right-4 z-20 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 shadow-lg cursor-pointer backdrop-blur-md border border-white/20 md:opacity-0 group-hover:opacity-100 focus:opacity-100"
+          className="absolute top-4 right-4 z-20 bg-black text-white p-3 rounded-full transition-all duration-300 hover:scale-110 shadow-2xl cursor-pointer border border-neutral-700 md:opacity-0 group-hover:opacity-100 focus:opacity-100"
           aria-label="Ver imagen completa"
         >
-          <Search className="w-4 h-4 md:w-5 h-5" />
+          <Search className="w-4 h-4 md:w-5 h-5 stroke-[2.5]" />
         </button>
       </div>
 
@@ -67,12 +67,13 @@ export const Lightbox = ({ imageSrc, title, subtitle, children }: LightboxProps)
             className="relative max-w-5xl max-h-[85vh] flex flex-col items-center justify-center z-[9999]"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Botón X de Cierre con el mismo estilo de alto contraste */}
             <button 
               onClick={handleClose}
-              className="absolute -top-3 -right-3 md:-top-5 md:-right-5 z-[10000] text-white bg-neutral-800/80 hover:bg-neutral-700 border border-white/20 p-2.5 rounded-full transition-all duration-200 cursor-pointer shadow-xl backdrop-blur-sm"
+              className="absolute -top-3 -right-3 md:-top-5 md:-right-5 z-[10000] text-white bg-black hover:bg-neutral-900 border border-neutral-700 p-2.5 rounded-full transition-all duration-200 cursor-pointer shadow-xl"
               aria-label="Cerrar modal"
             >
-              <X className="w-5 h-5 md:w-6 h-6" />
+              <X className="w-5 h-5 md:w-6 h-6 stroke-[2.5]" />
             </button>
 
             <div className="overflow-hidden rounded-2xl border border-white/5 shadow-2xl bg-black/40 relative flex items-center justify-center">
