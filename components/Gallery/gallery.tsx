@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react";
-import { Card } from "@/components/ui/card";
 import { Search, X } from "lucide-react";
 
 interface ElectronicBoardData {
@@ -44,9 +43,9 @@ const Gallery = ({ electronicBoard }: GalleryProps) => {
                 <div className="max-w-7xl mx-auto px-4 lg:px-8 xl:px-16 py-6 w-full">
                     <div className="flex flex-col gap-6">
                         
-                        {/* 1. TARJETA GRANDE */}
+                        {/* 1. TARJETA GRANDE - Cambiada a bg-transparent y eliminados paddings por completo */}
                         {electronicBoard.post.length > 0 && (
-                            <Card className="group relative overflow-hidden rounded-3xl border border-white/10 dark:border-white/5 bg-neutral-900/40 p-0 shadow-2xl transition-all duration-500 after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/90 after:via-black/30 after:to-transparent after:z-10">
+                            <div className="group relative overflow-hidden rounded-3xl bg-transparent p-0 m-0 shadow-2xl transition-all duration-500 after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/90 after:via-black/20 after:to-transparent after:z-10">
                                 
                                 {/* BOTÓN DE LUPA CON EFECTO GLASS */}
                                 <button
@@ -61,7 +60,7 @@ const Gallery = ({ electronicBoard }: GalleryProps) => {
                                 <img
                                     src={electronicBoard.post[activeIndex].post_image}
                                     alt={electronicBoard.post[activeIndex].post_subtitle}
-                                    className="object-cover transition-transform duration-700 group-hover:scale-[1.02] h-[550px] md:h-[600px] lg:h-[750px] w-full"
+                                    className="object-cover block w-full transition-transform duration-700 group-hover:scale-[1.01] h-[500px] md:h-[600px] lg:h-[700px] rounded-3xl"
                                 />
                                 <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 z-20 flex flex-col gap-1.5">
                                     <span className="text-white/60 text-xs md:text-sm font-semibold uppercase tracking-wider">
@@ -71,7 +70,7 @@ const Gallery = ({ electronicBoard }: GalleryProps) => {
                                         {electronicBoard.post[activeIndex].post_subtitle}
                                     </h3>
                                 </div>
-                            </Card>
+                            </div>
                         )}
 
                         {/* 2. TARJETAS PEQUEÑAS */}
@@ -85,11 +84,11 @@ const Gallery = ({ electronicBoard }: GalleryProps) => {
                                         onClick={() => handleCardClick(index)} 
                                         className="cursor-pointer"
                                     >
-                                        <Card className="group relative overflow-hidden rounded-2xl border border-black/5 dark:border-white/10 bg-neutral-100/50 dark:bg-neutral-900/30 p-0 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/80 after:via-black/20 after:to-transparent after:z-10">
+                                        <div className="group relative overflow-hidden rounded-2xl bg-transparent p-0 m-0 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/80 after:via-black/10 after:to-transparent after:z-10">
                                             <img
                                                 src={post.post_image}
                                                 alt={post.post_subtitle}
-                                                className="object-cover transition-transform duration-500 group-hover:scale-105 h-[250px] md:h-[300px] w-full"
+                                                className="object-cover block w-full transition-transform duration-500 group-hover:scale-105 h-[250px] md:h-[300px] rounded-2xl"
                                             />
                                             <div className="absolute bottom-0 left-0 right-0 p-6 z-20 flex flex-col gap-1">
                                                 <span className="text-white/60 text-xs uppercase tracking-wider font-medium">
@@ -99,7 +98,7 @@ const Gallery = ({ electronicBoard }: GalleryProps) => {
                                                     {post.post_subtitle}
                                                 </h3>
                                             </div>
-                                        </Card>
+                                        </div>
                                     </div>
                                 );
                             })}
@@ -115,7 +114,6 @@ const Gallery = ({ electronicBoard }: GalleryProps) => {
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 animate-in fade-in duration-300"
                     onClick={() => setIsZoomOpen(false)}
                 >
-                    {/* Botón de cerrar con efecto Blur */}
                     <button 
                         onClick={() => setIsZoomOpen(false)}
                         className="absolute top-5 right-5 z-50 text-white bg-white/10 hover:bg-white/25 border border-white/10 p-3 rounded-full transition-all duration-300 cursor-pointer backdrop-blur-md"
@@ -123,7 +121,6 @@ const Gallery = ({ electronicBoard }: GalleryProps) => {
                         <X className="w-6 h-6" />
                     </button>
 
-                    {/* Contenedor de la imagen */}
                     <div 
                         className="relative max-w-5xl max-h-[90vh] flex flex-col items-center justify-center"
                         onClick={(e) => e.stopPropagation()}
@@ -131,7 +128,7 @@ const Gallery = ({ electronicBoard }: GalleryProps) => {
                         <img
                             src={electronicBoard.post[activeIndex].post_image}
                             alt={electronicBoard.post[activeIndex].post_subtitle}
-                            className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl border border-white/10"
+                            className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
                         />
                         <div className="mt-4 text-center">
                             <h4 className="text-white text-lg font-semibold">
