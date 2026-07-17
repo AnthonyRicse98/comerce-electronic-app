@@ -25,21 +25,21 @@ const defaultItems: TimelineItem[] = [
         title: "Instalación OFF GRID",
         description: "Ideales para la ciudad, se interconecta a la red eléctrica, lo que permite compensar energía y reducir costos de electricidad. ",
         image: "/4_SISTEMA_FOTOVOLTAICO/OFF_GRID.png",
-        badge: "Sistemas foltovoitaicos",
+        badge: "Sistemas fotovoltaicos",
     },
     {
         type: "On Grid",
         title: "Instalación ON GRID",
         description: "Ideales para zonas rurales o donde no hay acceso a la electricidad, debido al uso de baterías este sistema ofrece autonomía total. ",
         image: "/4_SISTEMA_FOTOVOLTAICO/ON_GRID.png",
-        badge: "Sistemas foltovoitaicos",
+        badge: "Sistemas fotovoltaicos",
     },
     {
         type: "Soporte",
         title: "Mantenimiento preventivo y correctivo",
         description: "Ofrecemos planes de mantenimiento personalizados siguiendo las indicaciones del fabricante con el objetivo de garantizar la máxima disponibilidad y prolongar la vida útil de los componentes del sistema fotovoltaico.",
         image: "/4_SISTEMA_FOTOVOLTAICO/MANTENIMIENTO.jpg",
-        badge: "Sistemas foltovoitaicos",
+        badge: "Sistemas fotovoltaicos",
     },
 ];
 
@@ -49,22 +49,24 @@ const fadeUpVariants = {
 };
 
 export const Timeline = ({ items = defaultItems, className }: TimelineProps) => {
-    const [activeIndex, setActiveIndex] = useState(2);
+    const [activeIndex, setActiveIndex] = useState(0);
     const [isZoomOpen, setIsZoomOpen] = useState(false);
-    const activeItem = items[activeIndex];
+    const activeItem = items[activeIndex] || items[0];
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
+    // Scroll automático al botón activo
     useEffect(() => {
         const activeRef = buttonRefs.current[activeIndex];
         if (activeRef) {
             activeRef.scrollIntoView({
                 behavior: "smooth",
-                block: "center",
+                block: "nearest",
                 inline: "center"
             });
         }
     }, [activeIndex]);
 
+    // Cerrar modal con Escape y bloquear scroll del body
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === "Escape") setIsZoomOpen(false);
@@ -91,13 +93,21 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                 }
             `}</style>
 
-            <div className="grid grid-cols-12 gap-8 lg:gap-12">
-                {/* Selector de Años */}
+            <div className="grid grid-cols-12 gap-8 lg:gap-12 items-start">
+                
+                {/* Selector de Navegación (Móvil: Horizontal Slider | Desktop: Columna Vertical) */}
                 <div className="relative flex flex-col items-center shrink-0 w-full lg:w-28 lg:col-span-1 col-span-12">
+                    {/* Línea decorativa de fondo (Solo Desktop) */}
                     <div className="absolute left-1/2 -translate-x-1/2 top-4 bottom-4 w-[2px] bg-border/40 hidden lg:block" />
 
                     <div 
-                        className="flex flex-row lg:flex-col gap-4 lg:h-112 overflow-auto hide-scrollbar md:snap-y snap-x lg:py-36 lg:px-0 px-10 snap-mandatory w-full items-center relative z-20" 
+                        className={cn(
+                            "flex gap-3 relative z-20 w-full items-center",
+                            // Móvil: scroll horizontal táctil sin cortes, centrado
+                            "flex-row overflow-x-auto hide-scrollbar snap-x snap-mandatory px-4 py-3 justify-start sm:justify-center",
+                            // Desktop: estructura vertical con altura fija
+                            "lg:flex-col lg:h-112 lg:overflow-y-auto lg:py-36 lg:px-0 lg:justify-start"
+                        )}
                         style={{ 
                             scrollBehavior: "smooth",
                             WebkitOverflowScrolling: "touch"
@@ -111,8 +121,13 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                                     ref={(el) => { buttonRefs.current[index] = el; }}
                                     onClick={() => setActiveIndex(index)}
                                     className={cn(
-                                        "relative rounded-full py-2 px-6 lg:py-3 lg:px-0 lg:w-20 transition-colors duration-300 shrink-0 snap-center focus:outline-hidden cursor-pointer",
-                                        isActive ? "text-primary-foreground font-semibold" : "text-muted-foreground hover:text-foreground font-medium"
+                                        "relative rounded-full transition-all duration-300 shrink-0 snap-center focus:outline-hidden cursor-pointer",
+                                        // Dimensiones táctiles perfectas para móviles vs tamaño estricto en desktop
+                                        "py-2.5 px-5 min-w-[110px]", 
+                                        "lg:py-3 lg:px-0 lg:w-20 lg:min-w-0", 
+                                        isActive 
+                                            ? "text-primary-foreground font-semibold" 
+                                            : "text-muted-foreground hover:text-foreground font-medium"
                                     )}
                                 >
                                     {isActive && (
@@ -122,7 +137,7 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                                             transition={{ type: "spring", stiffness: 380, damping: 30 }}
                                         />
                                     )}
-                                    <span className="text-sm tracking-tight block text-center">
+                                    <span className="text-sm tracking-tight block text-center truncate px-1">
                                         {item.type}
                                     </span>
                                 </button>
@@ -130,6 +145,7 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                         })}
                     </div>
 
+                    {/* Desvanecidos degradados (Solo Desktop) */}
                     <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-30 lg:block hidden" />
                     <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent pointer-events-none z-30 lg:block hidden" />
                 </div>
@@ -177,18 +193,17 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                                 </motion.p>
                             </div>
 
-                            {/* Tarjeta de Imagen Modificada */}
+                            {/* Tarjeta de Imagen sin bordes oscuros */}
                             <div className="w-full flex flex-col gap-4 lg:ps-5 lg:col-span-5">
                                 <motion.div 
                                     variants={{
                                         initial: { opacity: 0, scale: 0.95, y: 10 },
                                         animate: { opacity: 1, scale: 1, y: 0 }
                                     }}
-                                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }} // Eliminado: border border-border/50
+                                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                                     className="group relative overflow-hidden rounded-2xl bg-muted aspect-4/3 lg:aspect-11/9 shadow-xl"
-
                                 >
-                                    {/* Botón de Lupa con Efecto Glassmorphic */}
+                                    {/* Botón de Lupa Glassmorphism */}
                                     <button
                                         onClick={() => setIsZoomOpen(true)}
                                         className="absolute top-5 right-5 z-20 bg-white/10 hover:bg-white/20 text-white p-3.5 rounded-full transition-all duration-300 hover:scale-110 shadow-lg cursor-pointer backdrop-blur-md border border-white/20"
@@ -202,7 +217,6 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                                         src={activeItem.image}
                                         alt={activeItem.title}
                                         className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02] rounded-2xl"
-                                        // Añadido: rounded-2xl para asegurar que la imagen se amolde perfectamente al contenedor sin desbordes de color
                                     />
                                 </motion.div>
                             </div>
@@ -211,7 +225,7 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                 </div>
             </div>
 
-            {/* Modal Lightbox Animado con Pie de Foto */}
+            {/* Modal Lightbox Animado */}
             <AnimatePresence>
                 {isZoomOpen && (
                     <motion.div
@@ -243,7 +257,7 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                                 alt={activeItem.title}
                                 className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
                             />
-                            {/* Información Inferior de la Imagen */}
+                            {/* Información Inferior */}
                             <div className="mt-4 text-center">
                                 <h4 className="text-white text-lg font-semibold">
                                     {activeItem.title}
