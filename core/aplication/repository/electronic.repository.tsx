@@ -20,5 +20,9 @@ export const ElectronicRepository = {
 
   async getElectronicBoard(){
     return ElectronicServices.getElectronicBoard();
+  },
+
+  async getFotovoltaicSystem(){
+    return ElectronicServices.getFotovoltaicSystem();
   }
 };

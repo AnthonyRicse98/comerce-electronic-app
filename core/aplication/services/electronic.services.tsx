@@ -105,13 +105,35 @@ export const ElectronicServices = {
 
     if (error) throw new Error(error.message);
 
-    const { information, content } = data.collection;
+    const {  content } = data.collection;
 
     return {
       electronicBoard: {
         title: content.electronic_board_title,
         post: content.electronic_board_post
       },
+    };
+  },
+
+  async getFotovoltaicSystem() {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+      .from("electronic-app")
+      .select("name, collection")
+      .eq("name", "fotovoltaic-system")
+      .single();
+
+    if (error) throw new Error(error.message);
+
+    const { information, content } = data.collection;
+
+    return {
+      information: {
+        title: information.information_title,
+        post: information.information_subtitle
+      },
+      post: content.post
     };
   },
 };
