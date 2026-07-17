@@ -12,7 +12,7 @@ export async function createClient() {
         getAll() {
           return cookieStore.getAll();
         },
-        // Añadimos el tipo explícito para solucionar el error de TypeScript
+        // Añadimos el tipo explíc1ito para solucionar el error de TypeScript
         setAll(cookiesToSet: { name: string; value: string; options: any }[]) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
