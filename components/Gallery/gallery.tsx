@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Search, X } from "lucide-react";
 
 interface ElectronicBoardData {
@@ -17,14 +17,21 @@ interface GalleryProps { electronicBoard: ElectronicBoardData; }
 const Gallery = ({ electronicBoard }: GalleryProps) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [isZoomOpen, setIsZoomOpen] = useState(false);
+    
+    const topGalleryRef = useRef<HTMLDivElement>(null);
 
     const handleCardClick = (index: number) => {
         setActiveIndex(index);
+        
+        topGalleryRef.current?.scrollIntoView({ 
+            behavior: "smooth", 
+            block: "start" 
+        });
     };
 
     return (
         <>
-            <section className="overflow-hidden">
+            <section ref={topGalleryRef} className="overflow-hidden scroll-mt-24">
                 <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
                     <div className="py-8 lg:py-12">
                         <div className="max-w-5xl space-y-4">
@@ -43,11 +50,11 @@ const Gallery = ({ electronicBoard }: GalleryProps) => {
                 <div className="max-w-7xl mx-auto px-4 lg:px-8 xl:px-16 py-6 w-full">
                     <div className="flex flex-col gap-6">
                         
-                        {/* 1. TARJETA GRANDE - Cambiada a bg-transparent y eliminados paddings por completo */}
+                        {/* 1. TARJETA GRANDE (Añadido 'relative z-0' para aislar el orden de apilamiento respecto al Navbar) */}
                         {electronicBoard.post.length > 0 && (
-                            <div className="group relative overflow-hidden rounded-3xl bg-transparent p-0 m-0 shadow-2xl transition-all duration-500 after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/90 after:via-black/20 after:to-transparent after:z-10">
+                            <div className="group relative z-0 overflow-hidden rounded-3xl bg-transparent p-0 m-0 shadow-2xl transition-all duration-500 after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/90 after:via-black/20 after:to-transparent after:z-10">
                                 
-                                {/* BOTÓN DE LUPA CON EFECTO GLASS */}
+                                {/* BOTÓN DE LUPA CON EFECTO GLASS (Regresa a z-20 para recibir clics por encima del degradado) */}
                                 <button
                                     onClick={() => setIsZoomOpen(true)}
                                     className="absolute top-5 right-5 z-20 bg-white/10 hover:bg-white/20 text-white p-3.5 rounded-full transition-all duration-300 hover:scale-110 shadow-lg cursor-pointer backdrop-blur-md border border-white/20"
