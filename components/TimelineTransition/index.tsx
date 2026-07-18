@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, type Variants } from "motion/react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Lightbox } from "@/components/LightBox/lightbox"; 
@@ -39,7 +39,7 @@ const containerStatsVariants = {
     }
 };
 
-const cardStatVariants = {
+const cardStatVariants: Variants = {
     initial: { opacity: 0, scale: 0.95, y: 15 }, // Reducimos el desplazamiento vertical para evitar saltos bruscos
     animate: { 
         opacity: 1, 

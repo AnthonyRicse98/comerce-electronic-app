@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 
-interface GalleryItem {
+export interface GalleryItem {
   id: string;
   title: string;
   summary: string;

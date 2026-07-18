@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from "next/link";
-import { SVGButton } from '@/lib/utils';
+import { SVGButton } from '@/components/ui/SVGButton'; // Corrected import path
 import {
   NavigationMenu,
   NavigationMenuContent,

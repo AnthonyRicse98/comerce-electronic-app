@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { SVGButton } from '@/components/ui/SVGButton'; // Add import for SVGButton
 
 interface CTAButton {
   variant: 'primary' | 'secondary';
