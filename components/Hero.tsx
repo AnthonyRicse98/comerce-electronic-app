@@ -70,7 +70,7 @@ export const Hero = ({ multimedia, title, description }: HeroProps) => {
               className="text-white text-2xl sm:text-4xl md:text-6xl font-bold text-center max-w-3xl"
               style={{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
             >
-              { multimedia.description }
+              { title }
             </h1>
           </div>
 

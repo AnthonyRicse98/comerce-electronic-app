@@ -9,7 +9,7 @@ export default async function FotovoltaicSystem() {
 
     return (
         <>
-            <TimelineBlock information={information} data ={post}/>
+            <TimelineBlock information={information} data={post}/>
             <WhatsAppButton phoneNumber="51940058361" className="bottom-6 right-6 md:bottom-10 md:right-10" />
         </>
     )

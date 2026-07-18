@@ -6,12 +6,14 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Lightbox } from "@/components/LightBox/lightbox"; 
 
+// Se agrega una interfaz para soportar estadísticas dinámicas (como los kW de potencia)
 export interface TimelineItem {
     type: string;
     title: string;
     description: string;
     image: string;
     badge?: string;
+    stats?: string[]; // Mapea potencias como ["3.5 kW"] o ["7 kW", "11 kW", "22 kW"]
 }
 
 interface TimelineProps {
@@ -19,27 +21,30 @@ interface TimelineProps {
     className?: string;
 }
 
+// Datos actualizados con la información de electromovilidad y cargadores
 const defaultItems: TimelineItem[] = [
     {
-        type: "Off Grid",
-        title: "Instalación OFF GRID",
-        description: "Ideales para la ciudad, se interconecta a la red eléctrica, lo que permite compensar energía y reducir costos de electricidad. ",
-        image: "/4_SISTEMA_FOTOVOLTAICO/OFF_GRID.png",
-        badge: "Sistemas fotovoltaicos",
+        type: "Portátil",
+        title: "Cargador Portátil",
+        description: "Ideales para usarlos en cualquier lugar con disponibilidad estándar de energía eléctrica. La carga es lenta pero confiable.",
+        image: "/4_SISTEMA_FOTOVOLTAICO/CARGADOR_PORTATIL.jpg", // Asegúrate de actualizar la ruta de tu imagen
+        badge: "Carga de Electromóviles",
+        stats: ["3.5 kW"]
     },
     {
-        type: "On Grid",
-        title: "Instalación ON GRID",
-        description: "Ideales para zonas rurales o donde no hay acceso a la electricidad, debido al uso de baterías este sistema ofrece autonomía total. ",
-        image: "/4_SISTEMA_FOTOVOLTAICO/ON_GRID.png",
-        badge: "Sistemas fotovoltaicos",
+        type: "Cargadores AC",
+        title: "Cargador de Pared (Wallbox)",
+        description: "Cargador fijo, diseñado para edificios, hogares y negocios. Ideales para carga doméstica y de oficina, ofrecen una carga segura y eficiente durante períodos más largos. La velocidad de carga es intermedia y confiable.",
+        image: "/4_SISTEMA_FOTOVOLTAICO/CARGADOR_AC.jpg",
+        badge: "Carga de Electromóviles",
+        stats: ["7 kW", "11 kW", "22 kW"]
     },
     {
         type: "Soporte",
-        title: "Mantenimiento preventivo y correctivo",
-        description: "Ofrecemos planes de mantenimiento personalizados siguiendo las indicaciones del fabricante con el objetivo de garantizar la máxima disponibilidad y prolongar la vida útil de los componentes del sistema fotovoltaico.",
-        image: "/4_SISTEMA_FOTOVOLTAICO/MANTENIMIENTO.jpg",
-        badge: "Sistemas fotovoltaicos",
+        title: "Instalación y Soporte Técnico",
+        description: "Realizamos la instalación de los cargadores de pared con un correcto dimensionamiento eléctrico asegurando que las protecciones correspondan a las normas técnicas vigentes.",
+        image: "/4_SISTEMA_FOTOVOLTAICO/SOPORTE_CARGADORES.jpg",
+        badge: "Carga de Electromóviles"
     },
 ];
 
@@ -79,14 +84,12 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
             <div className="grid grid-cols-12 gap-8 lg:gap-12 items-start">
                 
                 {/* Selector de Navegación */}
-                {/* CORRECCIÓN: Se cambió 'relative' global por un z-index controlado (z-10 en móvil, z-20 en desktop) */}
-                <div className="relative z-10 lg:z-20 flex flex-col items-center shrink-0 w-full lg:w-28 lg:col-span-1 col-span-12">
+                <div className="relative z-10 lg:z-20 flex flex-col items-center shrink-0 w-full lg:w-32 lg:col-span-2 col-span-12">
                     <div className="absolute left-1/2 -translate-x-1/2 top-4 bottom-4 w-[2px] bg-border/40 hidden lg:block" />
 
                     <div 
                         className={cn(
                             "flex gap-3 relative w-full items-center",
-                            // CORRECCIÓN: Se reduce de z-20 a z-10 en móvil para que pase por DEBAJO del Navbar de SIME POWER
                             "z-10 flex-row overflow-x-auto hide-scrollbar snap-x snap-mandatory px-4 py-3 justify-start sm:justify-center",
                             "lg:z-20 lg:flex-col lg:h-112 lg:overflow-y-auto lg:py-36 lg:px-0 lg:justify-start"
                         )}
@@ -104,8 +107,8 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                                     onClick={() => setActiveIndex(index)}
                                     className={cn(
                                         "relative rounded-full transition-all duration-300 shrink-0 snap-center focus:outline-hidden cursor-pointer",
-                                        "py-2.5 px-5 min-w-[110px]", 
-                                        "lg:py-3 lg:px-0 lg:w-20 lg:min-w-0", 
+                                        "py-2.5 px-5 min-w-[120px]", 
+                                        "lg:py-3 lg:px-0 lg:w-28 lg:min-w-0", 
                                         isActive 
                                             ? "text-primary-foreground font-semibold" 
                                             : "text-muted-foreground hover:text-foreground font-medium"
@@ -131,7 +134,7 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                 </div>
 
                 {/* Contenedor de Contenidos */}
-                <div className="flex-1 flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full overflow-hidden lg:col-span-11 col-span-12">
+                <div className="flex-1 flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full overflow-hidden lg:col-span-10 col-span-12">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={activeItem.type}
@@ -159,7 +162,7 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                                         animate: { opacity: 1, y: 0 }
                                     }}
                                     transition={{ type: "spring", stiffness: 100 }}
-                                    className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-foreground"
+                                    className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-foreground"
                                 >
                                     {activeItem.type}
                                 </motion.h2>
@@ -171,6 +174,28 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                                 <motion.p variants={fadeUpVariants} className="sm:text-lg text-base text-muted-foreground leading-relaxed max-w-xl">
                                     {activeItem.description}
                                 </motion.p>
+
+                                {/* ESTADÍSTICAS / CAPACIDADES (NUEVA SECCIÓN REQUERIDA) */}
+                                {activeItem.stats && activeItem.stats.length > 0 && (
+                                    <motion.div 
+                                        variants={fadeUpVariants}
+                                        className="mt-4 w-full"
+                                    >
+                                        <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Potencias Disponibles</p>
+                                        <div className="flex flex-wrap gap-3">
+                                            {activeItem.stats.map((stat, i) => (
+                                                <div 
+                                                    key={i} 
+                                                    className="bg-secondary/40 border border-border/60 rounded-xl px-4 py-2.5 flex items-center justify-center min-w-[80px]"
+                                                >
+                                                    <span className="text-lg font-bold tracking-tight text-foreground">
+                                                        {stat}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                )}
                             </div>
 
                             {/* Tarjeta de Imagen */}
@@ -181,7 +206,7 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                                         animate: { opacity: 1, scale: 1, y: 0 }
                                     }}
                                     transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                                    className="w-full aspect-4/3 lg:aspect-11/9 shadow-xl rounded-2xl overflow-hidden"
+                                    className="w-full aspect-4/3 lg:aspect-11/9 shadow-xl rounded-2xl overflow-hidden group relative"
                                 >
                                     <Lightbox 
                                         imageSrc={activeItem.image} 
@@ -192,7 +217,7 @@ export const Timeline = ({ items = defaultItems, className }: TimelineProps) => 
                                             <img
                                                 src={activeItem.image}
                                                 alt={activeItem.title}
-                                                className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                                                className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                                             />
                                         </div>
                                     </Lightbox>

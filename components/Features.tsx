@@ -1,46 +1,48 @@
 'use client';
 
-import CardProduct from './ui/Card/CardProduct';
+import { FeatureCards } from './FeatureCards';
+import { GalleryItem } from './FeatureCards'; // Import GalleryItem
+import { RawServicesData } from '@/core/aplication/services/electronic.services'; // Import RawServicesData
 
 interface FeaturesProps {
     title: string;
     description: string;
-  
+    rawServices?: RawServicesData; // Acepta la data raw de servicios
 }
 // Componente Features
-export const Features = ({ title, description }: FeaturesProps) => {
+export const Features = ({ title, description, rawServices }: FeaturesProps) => {
+  const mappedItems: GalleryItem[] = [];
+
+  // Realiza el mapeo de la data raw de servicios al formato esperado por FeatureCards
+  if (rawServices) {
+    for (let i = 1; i <= 4; i++) {
+      const titleKey = `services_title_${i}` as keyof RawServicesData;
+      const descriptionKey = `services_description_${i}` as keyof RawServicesData;
+      const imgKey = `services_img_${i}` as keyof RawServicesData;
+      const urlKey = `services_url_${i}` as keyof RawServicesData;
+
+      // Asegúrate de que todas las propiedades existan antes de agregarlas
+      if (
+        rawServices[titleKey] &&
+        rawServices[descriptionKey] &&
+        rawServices[imgKey] &&
+        rawServices[urlKey]
+      ) {
+        mappedItems.push({
+          id: `item-${i}`,
+          title: rawServices[titleKey] as string,
+          summary: rawServices[descriptionKey] as string,
+          image: rawServices[imgKey] as string,
+          url: rawServices[urlKey] as string,
+        });
+      }
+    }
+  }
 
   return (
     <section className="sm:py-24 pt-16 pb-16 relative" id="features">
       <div className="sm:px-6 lg:px-8 max-w-7xl mr-auto ml-auto px-4">
-        <div className="text-center mb-12 in-view" data-scroll-animate-children="">
-          <h2
-            className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-center mt-2 text-black"
-          >
-            {
-              title
-            }
-          </h2>
-          <p
-            className="text-lg font-light sm:text-lg md:text-xl lg:text-2xl text-neutral-700 text-center mt-4"
-            style={{ opacity: 1, transform: 'translateY(0px)' }}
-          >
-            {
-              description
-            }
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-            <CardProduct />
-            <CardProduct />
-            <CardProduct />
-            <CardProduct />
-            <CardProduct />
-            <CardProduct />
-
-        </div>
+       <FeatureCards heading={title} items={mappedItems}/> {/* Pasa los items mapeados */}
       </div>
     </section>
   );
