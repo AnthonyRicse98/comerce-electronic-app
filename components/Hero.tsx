@@ -39,7 +39,8 @@ const OurselveTitle = ({ title, description }: OuserlveProps) => {
 
 // --- Hero Component ---
 export const Hero = ({ multimedia, title, description }: HeroProps) => {
-  return (
+  const { description :carruselTitle } = multimedia.content.homepage_media
+  return ( 
     <>
       {/* El Hero ahora solo maneja la sección de la imagen principal */}
       <section className="h-64 md:h-screen relative w-full" id="home">
@@ -70,7 +71,7 @@ export const Hero = ({ multimedia, title, description }: HeroProps) => {
               className="text-white text-2xl sm:text-4xl md:text-6xl font-bold text-center max-w-3xl"
               style={{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
             >
-              { title }
+              { carruselTitle }
             </h1>
           </div>
 
