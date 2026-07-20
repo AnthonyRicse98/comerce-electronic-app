@@ -1,6 +1,9 @@
-export default async function sitemap() {
+import { MetadataRoute } from "next"
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Aquí puedes hacer fetch de tu base de datos o API si tienes URLs dinámicas
-  // const posts = await getPosts(); 
+  // const posts = await getPosts
+  // (); 
   
   return [
     {
