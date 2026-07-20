@@ -35,6 +35,7 @@ export default async function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <meta name="google-site-verification" content="uqsBtUBziitEy1tLAYaK4lKuJtKcBurp3qc4ojm0MsI" />
         <link rel="icon" href="/vercel.svg" type="image/svg+xml" />
       </head>
       <body className={`${inter.className} antialiased text-neutral-100 bg-neutral-950`}>
