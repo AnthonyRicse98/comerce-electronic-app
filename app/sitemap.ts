@@ -55,6 +55,6 @@ export default async function sitemap() {
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
-    }
+    },
   ]
 }
